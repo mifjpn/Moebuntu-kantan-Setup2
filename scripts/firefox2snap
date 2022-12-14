@@ -1,28 +1,28 @@
 #!/bin/bash
 
 #if [ -e /etc/apt/preferences.d/mozillateamppa ]; then
-  echo "=Remove deb firefox and Install snap firefox=" 
-  echo " remove deb-firefox from dock"
+  echo "=萌え版firefoxを消して、もとの萌えないfirefoxに戻します。=" 
+  echo " ランチャのドックからfirefoxのお気に入りを一旦消します。"
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp |  sed -e "s/'firefox.desktop', //g"`
   gsettings set org.gnome.shell favorite-apps "$tmp"  
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp | sed -e "s/'firefox_firefox.desktop', //g"`
   gsettings set org.gnome.shell favorite-apps "$tmp"  
-  echo " remove prefarence of DEB firefox"
+  echo " 萌え版firefoxのアップデート時の候補の設定を取り下げます。"
   sudo rm -rf /etc/apt/preferences.d/mozillateamppa
-  echo " remove deb firefox"
+  echo " 萌え版のfirefoxを消します"
   sudo apt remove --autoremove -y firefox >/dev/null 2>/dev/null
-  echo " remove firefox deb repository"
+  echo " 萌え版のfirefoxのリポジトリ（入手先）を取り消します。"
   sudo add-apt-repository --remove -y ppa:mozillateam/ppa >/dev/null 2>/dev/null
-  echo " install snap firefox"
+  echo " もとの萌えないfirefoxに戻します。（時間がかかるかもしれません。）"
   sudo snap install firefox
-  echo " set firefox to dock"
+  echo " ランチャのドックにfirefoxのお気に入りを入れます。"
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp | sed s/\\\\[/"['firefox_firefox.desktop', "/`
   gsettings set org.gnome.shell favorite-apps "$tmp"
   echo ""
-  echo -n "Hit Any Key:"
+  echo -n "キーを押してメニューに戻る:"
   read -r -n 1 -s answer
   echo ""
 #fi

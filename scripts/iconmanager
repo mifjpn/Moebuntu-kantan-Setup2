@@ -10,14 +10,14 @@ TempDir="Moebuntu.temp"
 
 # Install curl
 InstallCurl() {
-  echo "=Install curl="
+  echo "=下準備でcurlというネットからのダウンロード用のコマンドをインストールする。="
   dpkg -s curl >/dev/null 2>&1
   if [ ! $? -eq 0 ]; then
     sudo apt install -y curl
-    echo "done"
+    echo "終了"
     echo ""
     else
-        echo "Already Installed"
+        echo "すでにインストールされていました。"
   fi
   echo ""
 }
@@ -25,44 +25,44 @@ InstallCurl() {
 # main
 # make temp directory
 if [ ! -d $TempDir ]; then
-  echo "=Create temp folder $TempDir="
+  echo "=$TempDirという、一時フォルダを作ります="
   mkdir $TempDir
 fi
 
 # install or remove?
 if [ "$1" = "install" ]; then
   # install
-  echo "=Install $MoeIconFileName="
+  echo "=$MoeIconFileNameをインストールします。="
   InstallCurl;
-  echo " download $MoeIconFileName"
+  echo " $MoeIconFileNameをダウンロードします。"
   curl -L $MoeIconUrl --output "$TempDir/$MoeIconFileName"
-  echo " unpack $MoeIconFileName"
+  echo " $MoeIconFileNameを展開します"
   tar Jxfv "$TempDir/$MoeIconFileName" -C $TempDir > /dev/null 2> /dev/null
-  echo " copy to $SYSIconDir"
+  echo " $SYSIconDir　フォルダへコピーします。"
   sudo cp -R "$TempDir/$MoeIconDirName" "$SYSIconDir"
-  echo " exsist Moe*:`ls -d /usr/share/icons/Moe*`"
-  echo " setting to $MoeIconName"
+  echo " いまシステムに存在する Moe*は、このとおりです。:`ls -d /usr/share/icons/Moe*`"
+  echo " $MoeIconNameをシステムに設定します。"
   gsettings set org.gnome.desktop.interface icon-theme "$MoeIconName"
-  echo "Done"
+  echo "終了"
   # remove
   elif [ "$1" = "remove" ]; then
-    echo "=Remove $MoeIconFileName and set detault="
-    echo " seting to $DefaultIconName"
+    echo "=$MoeIconFileNameを消して、既定のアイコンに戻します。 ="
+    echo " $DefaultIconNameをシステムに設定します。"
     gsettings set org.gnome.desktop.interface icon-theme "$DefaultIconName"
     # if exsist remove MoeBuntuIcon
     if [ -d "$SYSIconDir/$MoeIconDirName" ]; then
-      echo " Remove $SYSIconDir/$MoeIconDirName"
+      echo " $SYSIconDir/$MoeIconDirNameを消します。"
       sudo rm -rf "$SYSIconDir/$MoeIconDirName"
     fi
-    echo "Done"
+    echo "終了"
     echo ""
   else
     echo "install? remove?"
 fi
 
-echo "=Delete temp folder $TempDir="
+echo "=$TempDirという一時フォルダーを消します。="
 rm -rf $TempDir
 
 echo ""
-echo -n "Hit Any Key:"
+echo -n "キーを押してメニューに戻る:"
 read -r -n 1 -s answer

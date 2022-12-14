@@ -26,125 +26,125 @@ askyn() {
 }
 
 removemoeplymouth() {
-  echo " remove $MoePlymouthDirName"
+  echo " $MoePlymouthDirNameを消します。"
   if [ -d "$PlymothThemePath/$MoePlymouthDirName" ]; then
     sudo rm -rf "$PlymothThemePath/$MoePlymouthDirName"
   fi
 }
 
 removemoeplymouthalternaives() {
-  echo " remove alternatives $MoeAlternativesPath"
+  echo " alternatives $MoeAlternativesPathを消します。"
   sudo update-alternatives --remove default.plymouth "$MoeAlternativesPath" >/dev/null 2>/dev/null
 }
 
 setdefaultplymouthalternatives() {
-  echo " set alternatives $DetaultAlternativesPath"
+  echo " alternatives $DetaultAlternativesPathを設定します。"
   sudo update-alternatives --set default.plymouth "$DetaultAlternativesPath" >/dev/null 2>/dev/null
 }
 
 # Main
 # Prepare for Moe-nized
-echo "=set plymouth="
+echo "=起動画面を設定します="
 #  Set-default-temporaly
-echo " prepair for Moe"
+echo " 下準備をします。"
 setdefaultplymouthalternatives;
 removemoeplymouthalternaives;
 removemoeplymouth;
 
 # Create temp dir
 if [ ! -d $TempDir ]; then
-  echo " create temp folder $TempDir"
+  echo " $TempDirという一時フォルダーを作ります。"
   mkdir $TempDir
 fi
 
 # Install curl
-echo " install curl"
+echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールする。"
 dpkg -s curl >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt install -y curl
-  echo " installed"
+  echo " 終了"
   else
-      echo " already Installed"
+      echo " すでにインストールされていました。"
 fi
 
 # Download Plymouth
-echo " download $MoePlymouthFileName "
+echo " $MoePlymouthFileNameをダウンロードします。"
 curl -L $MoePlymouthURL --output "$TempDir/$MoePlymouthFileName"
 
 # Unpack
-echo " unpack $MoePlymouthFileName"
+echo " $MoePlymouthFileNameを展開します。"
 tar Jxfv "$TempDir/$MoePlymouthFileName" -C $TempDir > /dev/null 2> /dev/null
 
 # Set to plymouth Folder
-echo " copy to system theme folder"
+echo " システムのテーマフォルダにコピーします。"
 cd $TempDir
 sudo cp -R $MoePlymouthDirName "$PlymothThemePath/"
 cd ..
-echo " exist Moe Plymouth: `ls -d "$PlymothThemePath/$MoePlymouthDirName"`"
+echo " 今存在する起動画面はこれ: `ls -d "$PlymothThemePath/$MoePlymouthDirName"`"
 
 # Set update-altanatives
-  echo " set plymouth altanative"
-  echo "  install alternative default.plymouth $MoeAlternativesPath"
+  echo " 起動画面のaltanativeを設定します。"
+  echo "  alternativeのdefault.plymouth項目に$MoeAlternativesPathをインストールします。"
   sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth "$MoeAlternativesPath" 20 >/dev/null 2>/dev/null
-  echo "  set altanatives default.plymouth $MoeAlternativesPath"
+  echo "  altanativesのdefault.plymouth項目を$MoeAlternativesPathに切り替えます。"
   sudo update-alternatives --set default.plymouth "$MoeAlternativesPath" >/dev/null 2>/dev/null
 
 # Change login screen
-echo " Set Toy's basic plymouse screen image (Y)"
-echo -n "Or Set Original(or Example) plymouth png-file(N)?:"
+echo " Toyさんの基本スクリーンイメージを使う場合「Y」を押してください。"
+echo "　もしくは、自分のオリジナルのpng形式のイメージを入れる場合、また、例のイメージを入れる場合は「N」を押してください。"
 if askyn; then
   # Toy's basic Change screen then not copy
   # Remove tempdir
   rm -rf $TempDir
   # Update-initramfs
-  echo " update-initramfs"
-  echo " <wait a minute>"
+  echo " initramfsをアップデートして、設定を反映させます。"
+  echo " <しばらくお待ちください>"
   sudo update-initramfs -u -k all 
-  echo "Done"
-  echo -n "Hit Any Key:"
+  echo "終了"
+  echo -n "何かキーを押してメニューに戻る:"
   read -r -n 1 -s answer  
   echo ""
   exit 0
 fi
 # Choose Change Screen
-read -p "Please drag-and-drop plymouth png-file or push to set return(Example):" FileDrop
+read -p "自分のオリジナル（Png形式の）イメージを起動画面にしたい場合は、ファイラからドラックアンドドロップしてください。そのまま何も入れすにエンターキーを押すと例のイメージが設定されます。:" FileDrop
 if [ "$FileDrop" = "" ]; then
   # Null return
   # Set to default
-  echo " download default login picture"
+  echo " 例のイメージをダウンロードする。"
   curl -L $PlymouthDefaultPngUrl --output "$TempDir/$PlymouthDefaultFileName"
   # Set default plymouth picture
-  echo " set default plymouth picture"
+  echo " 例のイメージを起動画面として設定する。"
   sudo cp "$TempDir/$PlymouthDefaultFileName" $MoePlymouthBackGroundFile
   else
   # Drag-and-Drop string exists
   PlymouthFile=`echo $FileDrop | tr -d \'`
   if [ ! -e $PlymouthFile ]; then
-    echo "File Not exist!"
-    echo "Can not change login picture"
+    echo "指定した（ドラックアンドドロップした？）ファイルがありません。"
+    echo "イメージを変えられませんでした。"
     # remove temp-dir
     rm -rf $TempDir
     # Update-initramfs
-    echo " update-initramfs"
-    echo " <wait a minute>"
+    echo " initramfsをアップデートして、設定を反映させます。"
+    echo " <少しお待ちください>"
     sudo update-initramfs -u -k all 
-    echo "Done"    
-    echo -n "Hit Any Key:"
+    echo "終了"    
+    echo -n "何かキーを押してメニューに戻る:"
     read -r -n 1 -s answer
     echo ""     
     exit 0   
   fi
-  echo " set Plymouth tile picture to $PlymouthFile"
+  echo " 起動画面のイメージを$PlymouthFileに変えます。"
   sudo cp $PlymouthFile $MoePlymouthBackGroundFile
 fi
 # remove temp-dir
 rm -rf $TempDir
 # Update-initramfs
-echo " update-initramfs"
-echo " <wait a minute>"
+echo " initramfsをアップデートして、設定を反映させます。"
+echo " <少しお待ちください>"
 sudo update-initramfs -u -k all 
-echo "Done"    
-echo -n "Hit Any Key:"
+echo "終了"    
+echo -n "何かキーを押してメニューに戻る:"
 read -r -n 1 -s answer
 echo ""     
 exit 0

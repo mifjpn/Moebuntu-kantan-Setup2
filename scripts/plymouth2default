@@ -6,7 +6,7 @@ MoeAlternativesPath="/usr/share/plymouth/themes/mmspinner/mmspinner.plymouth"
 DetaultAlternativesPath="/usr/share/plymouth/themes/bgrt/bgrt.plymouth"
 
 removemoeplymouth() {
-  echo " remove $MoePlymouthDirName"
+  echo " $MoePlymouthDirNameを消します。"
   if [ -d "$PlymothThemePath/$MoePlymouthDirName" ]; then
     sudo rm -rf "$PlymothThemePath/$MoePlymouthDirName"
   fi
@@ -14,30 +14,30 @@ removemoeplymouth() {
 }
 
 removemoeplymouthalternaives() {
-  echo " remove alternatives $MoeAlternativesPath"
+  echo " alternatives $MoeAlternativesPathを消します。"
   sudo update-alternatives --remove default.plymouth "$MoeAlternativesPath" >/dev/null 2>/dev/null
   echo ""
 }
 
 setdefaultplymouthalternatives() {
-  echo " set alternatives $DetaultAlternativesPath"
+  echo " alternatives $DetaultAlternativesPathを設定します。"
   sudo update-alternatives --set default.plymouth "$DetaultAlternativesPath" >/dev/null 2>/dev/null
   echo ""
 }
 
 # main
 # update-initramfs
-echo "= remove MoePlynouth $MoePlymouthDirName (set to default)="
+echo "= $MoePlymouthDirNameの起動画面設定を消去し、既定に戻します。="
 setdefaultplymouthalternatives;
 removemoeplymouthalternaives;
 removemoeplymouth;
-echo " update-initramfs"
-echo " <wait a minute>"
+echo " initramfsをアップデートして、設定を有効化します。"
+echo " <しばらくお待ちください>"
 sudo update-initramfs -u -k all
 echo ""
-echo "Done"
+echo "終了"
 echo ""
-echo -n "Hit Any Key:"
+echo -n "キーを押してメニューに戻る:"
 read -r -n 1 -s answer
 echo ""
 

@@ -30,140 +30,140 @@ SoundMGd="https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal/raw/22.04
 menu() {
 clear
 echo -e $COL_GREEN" ------------------------------------------------------------------------------"
-echo -e "$COL_GREEN                          Moebuntu Setting Helper 2"
+echo -e "$COL_GREEN                          Moebuntu セッティング　ヘルパー　２"
 echo -e $COL_GREEN" ------------------------------------------------------------------------------"$COL_RESET
-PS3='Please enter your choice: '
-options=( 'base setting(Do first!)'
-          'set theme Pink'
-          'set theme Blue'
-          'set theme Green'
-          'set theme BlueGreen'
-          'set theme Navy'
-          'set theme Orange'
-          'set theme Purple'
-          'set theme Red'
-          'set theme Yellow'
-          'remove Moe-theme'
-          'set Moe-Pink-Icons'
-          'remove Moe-Pink-Icons'
-          'set Moe-spinner plymouth'
-          'remove Moe-spinner plymouth'
-          'set Moe Wallpaper'
-          'remove Moe Wallpaper'
-          'firefox to deb package'
-          'firefox to snap package'
-          'set Moesound_iori'
-          'set Moesound_maid_iori'
-          'set Moesound_SF_iori'
-          'set Moesound_MGd'
-          'remove Moesound'
-          'quit')
+PS3='選択肢を選んでね: '
+options=( '基礎の設定(最初にやること)'
+          'ピンクのテーマ'
+          '青のテーマ'
+          '緑のテーマ'
+          '青緑のテーマ'
+          'ネイビーのテーマ'
+          'オレンジのテーマ'
+          '紫のテーマ'
+          '赤のテーマ'
+          '黄のテーマ'
+          '萌えテーマを消す'
+          '萌えアイコン'
+          '萌えアイコンを消す'
+          '萌え起動画面'
+          '萌起動画面を消す'
+          '萌え壁紙'
+          '萌え壁紙を消す'
+          'firefoxを萌え版にする'
+          'firefoxを萌えない版に戻す'
+          '基本の萌え音'
+          'メイド風萌え音'
+          'SF風萌え音'
+          '初音ミク萌え音'
+          '萌え音を消す'
+          '終了')
 
 select opt in "${options[@]}"
 do
   case $opt in
-    "base setting(Do first!)'")
+    "基礎の設定(最初にやること)")
       /bin/bash install-GSM;
       break
     ;;
-    "set theme Pink")
+    "ピンクのテーマ")
       /bin/bash set-theme $ThemePink $LoginDefaltPicture ;
       break
     ;;
-    "set theme Blue")
+    "青のテーマ")
       /bin/bash set-theme $ThemeBlue $LoginDefaltPicture;
       break
     ;;
-    "set theme Green")
+    "緑のテーマ")
       /bin/bash set-theme $ThemeGreen $LoginDefaltPicture;
       break
     ;;
-    "set theme BlueGreen")
+    "青緑のテーマ")
       /bin/bash set-theme $ThemeBlueGreen $LoginDefaltPicture;
       break
     ;;
-    "set theme Navy")
+    "ネイビーのテーマ")
       /bin/bash set-theme $ThemeNavy $LoginDefaltPicture;
       break
     ;;
-    "set theme Orange")
+    "オレンジのテーマ")
       /bin/bash set-theme $ThemeOrange $LoginDefaltPicture;
       break
     ;;
-    "set theme Purple")
+    "紫のテーマ")
       /bin/bash set-theme $ThemePurple $LoginDefaltPicture;
       break
     ;;
-    "set theme Yellow")
+    "黄のテーマ")
       /bin/bash set-theme $ThemeYellow $LoginDefaltPicture;
       break
     ;;
-    "set theme Red")
+    "赤のテーマ")
       /bin/bash set-theme $ThemeRed $LoginDefaltPicture;
       break
     ;;
-    "remove Moe-theme")
+    "萌えテーマを消す")
       /bin/bash theme2defalt ;
       break
     ;;
-    "set Moe-Pink-Icons")
+    "萌えアイコン")
       /bin/bash iconmanager install ;
       break
     ;;
-    "remove Moe-Pink-Icons")
+    "萌えアイコンを消す")
       /bin/bash iconmanager remove ;
       break
     ;;
-    "set Moe-spinner plymouth")
+    "萌え起動画面")
       /bin/bash set-plymouth ;
       break
     ;;
-    "remove Moe-spinner plymouth")
+    "萌起動画面を消す")
       /bin/bash plymouth2default ;
       break
     ;;
-    "set Moe Wallpaper")
+    "萌え壁紙")
       /bin/bash wallmanager install ;
       break
     ;;
-    "remove Moe Wallpaper")
+    "萌え壁紙を消す")
       /bin/bash wallmanager remove ;
       break
     ;;
-    "firefox to deb package")
+    "firefoxを萌え版にする")
       /bin/bash firefox2deb ;
       break
     ;;
-    "firefox to snap package")
+    "firefoxを萌えない版に戻す")
       /bin/bash firefox2snap ;
       break
     ;;
-    "set Moesound_iori")
+    "基本の萌え音")
       /bin/bash setsound $Soundiori ;
       /bin/bash loginsound install ;
       break
     ;;
-    "set Moesound_maid_iori")
+    "メイド風萌え音")
       /bin/bash setsound $Soundmaid_iori ;
       /bin/bash loginsound install ;
       break
     ;;
-    "set Moesound_SF_iori")
+    "SF風萌え音")
       /bin/bash setsound $SoundSF_iori ;
       /bin/bash loginsound install ;
       break
     ;;
-    "set Moesound_MGd")
+    "初音ミク萌え音")
       /bin/bash setsound $SoundMGd ;
       /bin/bash loginsound install ;
       break
     ;;
-    "remove Moesound")
+    "萌え音を消す")
       /bin/bash removesound ;
       /bin/bash loginsound remove ;
       break
     ;;
-    "quit")
+    "終了")
       exit 0
     ;;
     *)

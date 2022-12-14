@@ -11,12 +11,12 @@ ConstMoeWallFileName="moe_wall.jpg"
 
 # Install curl
 InstallCurl() {
-  echo " install curl="
+  echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールする。"
   dpkg -s curl >/dev/null 2>&1
   if [ ! $? -eq 0 ]; then
     sudo apt -y install curl
     else
-        echo "Already Installed"
+        echo "すでにインストールされていました。"
   fi
   echo ""
 }
@@ -37,79 +37,79 @@ askyn() {
 # main
 # make temp directory
 if [ ! -d $TempDir ]; then
-  echo " create temp folder $TempDir"
+  echo " $TempDirという、一時フォルダを作ります"
   mkdir $TempDir
 fi
 
 # install or remove?
 if [ "$1" = "install" ]; then
   # install
-  echo "=Install $MoeWallFileName="
+  echo "=$MoeWallFileNameをインストール="
   InstallCurl;
-  echo " Set wallpaper to Toy's Basic image(Y)"
-  echo " Or Set your original jpg-image or example image(N)" 
+  echo " Toyさんの基本イメージを壁紙にするには「Y]を押してください。"
+  echo " または、あなたのオリジナルの壁紙（JPG形式）を利用するか、例の壁紙を入れる場合には「N」を押してください：" 
   if askyn; then
-    echo " download $MoeBasicWallFileName"
+    echo " $MoeBasicWallFileNameをダウンロードする。"
     curl -L $MoeBasicWallUrl --output "$TempDir/$MoeBasicWallFileName"
-    echo " copy $TempDir/$MoeBasicWallFileName to $SYSWallDir/$ConstMoeWallFileName"
+    echo " $TempDir/$MoeBasicWallFileNameから$SYSWallDir/$ConstMoeWallFileNameへコピーする。"
     sudo cp "$TempDir/$MoeBasicWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
-    echo " setting to file://$SYSWallDir/$ConstMoeWallFileName"
+    echo " システムをfile://$SYSWallDir/$ConstMoeWallFileNameに設定する。"
     gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName" 
-    echo " remove temp folder $TempDir"
+    echo " $TempDirという一時フォルダーを消します。"
     rm -rf $TempDir
     echo ""
-    echo -n "Hit Any Key:"
+    echo -n "何かキーを押してメニューに戻る:"
     read -r -n 1 -s answer
     echo ""
     exit 0     
   else
   # Ask filename of wallpaper
-    read -p "Please drag-and-drop wall jpg-file or push to set return(Example):" FileDrop
+    read -p "設定するイメージファイル（JPG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合は例のイメージが使用されます。:" FileDrop
     if [ "$FileDrop" = "" ]; then
 # set default login picture
 # download default login picture
-      echo " download example login picture=" 
-      echo " download $MoeWallFileName"
+      echo " 例となるログインイメージをダウンロードします。" 
+      echo " $MoeWallFileNameをダウンロードします。"
       curl -L $MoeWallUrl --output "$TempDir/$MoeWallFileName"
-      echo " copy to $SYSWallDir"
+      echo " $SYSWallDirへコピーします"
       sudo cp "$MoeWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
-      echo " setting to $MoeWallFileName"
+      echo " $MoeWallFileNameをシステムに設定します"
       gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
       gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
-      echo "Done"
-      echo " remove temp folder $TempDir"
+      echo "終了"
+      echo " $TempDirという一時フォルダーを消します。"
       rm -rf $TempDir
       echo ""
-      echo -n "Hit Any Key:"
+      echo -n "何かキーを押してメニューに戻る:"
       read -r -n 1 -s answer
       echo ""
       exit 0 
     else
     # FileDrop to login
       WallFileFullPath=`echo $FileDrop | tr -d \'`
-      echo "=Set fileDrop $WallFileFullPath to Wallpicture="
+      echo "=ドロップされた $WallFileFullPathを壁紙に設定します。="
       if [ ! -e $WallFileFullPath ]; then
-        echo "File Not exist!"
-        echo "Can not change Wallpaper"
+        echo "ファイルがありません!"
+        echo "壁紙を変更できません。"
         # remove temp-dir
         rm -rf $TempDir
         echo ""
-        echo -n "Hit Any Key:"
+        echo -n "何かキーを押してメニューに戻る:"
         read -r -n 1 -s answer
         echo ""     
         exit 0   
       fi
-      echo " copy $WallFileFullPath to $SYSWallDir"
+      echo " $WallFileFullPathから$SYSWallDirへコピーする。"
       sudo cp "$WallFileFullPath" "$SYSWallDir/$ConstMoeWallFileName"
-      echo " setting to $WallFileFullPath"
+      echo " $WallFileFullPathをシステムに設定する。"
       gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
       gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
-      echo "Done"
-      echo " remove temp folder $TempDir"
+      echo "終了"
+      echo " $TempDirという一時フォルダーを消します。"
       rm -rf $TempDir
       echo ""
-      echo -n "Hit Any Key:"
+      echo -n "キーを押してメニューに戻る:"
       read -r -n 1 -s answer
       echo ""
       exit 0 
@@ -117,24 +117,24 @@ if [ "$1" = "install" ]; then
   fi
   # remove
 elif [ "$1" = "remove" ]; then
-  echo "=Remove $MoeIconFileName and set detault="
-  echo " seting to $DefaultIconName"
+  echo "=$MoeWallFileNameを消して、既定に設定します。="
+  echo " $DefaultWallFileNameにシステムをセットします。"
   gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$DefaultWallFileName"
   gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$DefaultWallFileName"
   # if exsist remove MoeBuntuWall
   if [ -e "$SYSWallDir/$ConstMoeWallFileName" ]; then
-    echo " Remove $SYSWallDir/$ConstMoeWallFileName"
+    echo " $SYSWallDir/$ConstMoeWallFileNameを消します。"
     sudo rm "$SYSWallDir/$ConstMoeWallFileName"
   fi
-  echo "Done"
+  echo "終了"
   echo ""
 else
   echo "install? remove?"
 fi
-echo " remove temp folder $TempDir"
+echo " $TempDirという一時フォルダーを消します。"
 rm -rf $TempDir
 echo ""
-echo -n "Hit Any Key:"
+echo -n "キーを押してメニューに戻る:"
 read -r -n 1 -s answer
 echo ""
 

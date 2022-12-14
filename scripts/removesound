@@ -2,15 +2,15 @@
 
 # main
 # remove all Moesound
-echo " remove all MoeSound"
+echo " もえ音を消します。"
 sudo rm -rf /usr/share/sounds/Moe*
 # change sound gsetting
-echo " change sound gsettings Yaru"
+echo " 既定の音に設定を戻します。"
 gsettings set org.gnome.desktop.sound theme-name "Yaru"
-echo "Done"
+echo "終了"
 #
 echo ""
-echo -n "Hit Any Key:"
+echo -n "キーを押してメニューに戻る:"
 read -r -n 1 -s answer
 echo ""
 exit 0
