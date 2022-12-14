@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #if ! [ -e /etc/apt/preferences.d/mozillateamppa ]; then
-  echo "=萌え版でないfirefoxを消して、萌版のfirefoxを入れます="
+  echo "=萌え版でないfirefoxを消して、萌え版のfirefoxを入れます="
   echo " ランチャのドックからfirefoxのお気に入りを一旦消します。"
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp |  sed -e "s/'firefox.desktop', //g"`

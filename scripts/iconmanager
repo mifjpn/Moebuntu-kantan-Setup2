@@ -40,7 +40,6 @@ if [ "$1" = "install" ]; then
   tar Jxfv "$TempDir/$MoeIconFileName" -C $TempDir > /dev/null 2> /dev/null
   echo " $SYSIconDir　フォルダへコピーします。"
   sudo cp -R "$TempDir/$MoeIconDirName" "$SYSIconDir"
-  echo " いまシステムに存在する Moe*は、このとおりです。:`ls -d /usr/share/icons/Moe*`"
   echo " $MoeIconNameをシステムに設定します。"
   gsettings set org.gnome.desktop.interface icon-theme "$MoeIconName"
   echo "終了"
