@@ -1,77 +1,76 @@
 # Moebuntu-SetupHelperScript 2
-Moebuntu Setup Helper Script for Repository:Moebuntu-kawaiiUbuntu-ToysOriginal
-## 1.Overview of this setup helper
-This setup helper is for the ”[mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal](https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal)'' repository.
-The repository has a collection of nine moe (or kawaii) color themes.
-In addition, it also includes a Moe (or Kawaii) theme for Plymouth (ie the screen when the OS loads).
-And also include a Moe (or Kawaii) Sounds.
-This setup helper is intended to make setting them up easier.
+リポジトリ用 Moebuntu セットアップ ヘルパー スクリプト:Moebuntu-kawaiiUbuntu-ToysOriginal
+## 1.このセットアップヘルパーの概要
+このセットアップ ヘルパーは、「[https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal]」リポジトリ用です。
+リポジトリには、9 つの萌え (またはかわいい) カラー テーマのコレクションがあります。
+さらに、プリマスの萌え (またはカワイイ) テーマ (つまり、OS ロード時の画面) も含まれています。
+また、萌え (またはカワイイ) サウンドも含まれます。
+このセットアップ ヘルパーは、セットアップを簡単にすることを目的としています。
 
-## 2.How to use
-### 1)Operating system environment, download and preparation.
-Please prepare "UBUNTU22.04Lts".
-This script should work on this OS.
-First, download the release "scripts.tar.xz" with firefox.
-Then unpack this file with "Archive Manager" etc.
-Once the "scripts" folder is unpacked, you'll find the helper scripts in there.
-### 2)Explanation of the simplest usage
-In the "Nautilus" file manager, open the "script" folder.
-Among many shell scripts, the script to run is "Moeset".
-The easiest way is to right click on this "Moeset" and run it with "Run as a Program".
-When the script runs, "Moebuntu Setting Helper" will appear.
-### 3)How to use "Moebuntu Setting Helper"
-You can see the selection screen of many setup items.
-Here, the first setup item you must do is "1) set gnome-shell-extension-manager (Do first!)".
-The "gnome-shell-extension-manager" window will open. What to do here is given as instructions to this helper. They are:
+## 2.使い方
+### 1)OS環境、ダウンロード、準備。
+「UBUNTU22.04Lts」をご用意ください。
+このスクリプトは、この OS で動作するはずです。
+まず、Firefox でリリース "scripts.tar.xz" をダウンロードします。
+次に、このファイルを「Archive Manager」などで解凍します。
+"scripts" フォルダを解凍すると、そこにヘルパー スクリプトが含まれています。
+### 2)最も簡単な使い方の説明
+「Nautilus」ファイル マネージャで、「script」フォルダを開きます。
+数あるシェルスクリプトの中で、実行するスクリプトが「Moeset」です。
+最も簡単な方法は、この「Moeset」を右クリックし、「プログラムとして実行」で実行することです。
+スクリプトを実行すると「Moebuntu Setting Helper」が表示されます。
+### 3)「Moebuntu設定ヘルパー」の使い方
+多くの設定項目の選択画面をご覧いただけます。
+ここで、最初に行う設定項目は「1) gnome-shell-extension-manager を設定する (最初に実行してください!)」です。
+「gnome-shell-extension-manager」ウィンドウが開きます。 ここで何をすべきかは、このヘルパーへの指示として与えられます。 彼らです：
 
-1. Search for "User Themes" in the "Browse" tab
-2. Click the "Add" button to install
-3. Go to the Added tab and activate the Extension by setting the button on the header to "ON" (to the right)
-4. turn on the button to the right of "User Themes"
-(Then please push Window-close button and close this window)
+1.「参照」タブで「ユーザーテーマ」を検索
+2.「追加」ボタンをクリックしてインストール
+3. [追加済み] タブに移動し、ヘッダーのボタンを [オン] (右側) に設定して拡張機能を有効にします。
+4.「ユーザーテーマ」の右側にあるボタンをオンにします
+(その後、ウィンドウを閉じるボタンを押して、このウィンドウを閉じてください)
 
-That's all there is to do here.
- (Because: The reason for manipulating the GUI in this way is so that Gnome-Shell-Extention will gracefully react to changes in GNOME versions.)
+ここで行うことはそれだけです。
+  (理由: この方法で GUI を操作する理由は、Gnome-Shell-Extention が GNOME バージョンの変更に適切に反応するようにするためです。)
  
-Numbers 2) to 10) of choice are setups of 9 color "themes" that are each "Window Theme and Shell Theme Set".
-In those settings, you can change the login screen.
-If you want to change, type "Y" to the "Change login screen" question.
-If you want to change to Toy's basic login screen, type "Y" to the "Set Toy's basic login picture(Y)
- Or Original(or Example) login png-picture(N)?:" question.
-If You choose "N" for Oringinal or Example login images,
-A question for inputting images in PNG format for changes will appear.
-If you have a png image file you want to change, drag and drop it from nautilus file mamager. If you press return without entering anything, the example-image will be specified.
-If you choose "11)remove Moebuntu theme(Reset to Yaru)", the 9-color theme file of Moebuntu will be deleted, and the default setting of "Yaru" will be restored.
+2) から 10) の数字はそれぞれ「ウィンドウテーマとシェルテーマセット」である 9 色の「テーマ」の設定です。
+これらの設定では、ログイン画面を変更できます。
+変更する場合は、「ログイン画面の変更」の質問に「Y」と入力してください。
+Toyの基本ログイン画面に変更したい場合は「Toyの基本ログイン画面の設定(Y)」に「Y」を入力してください。
+  または元の (または例) login png-picture(N)?:" という質問。
+Oringinal または Example ログイン画像で「N」を選択すると、
+変更用の PNG 形式の画像を入力するための質問が表示されます。
+変更したい png 画像ファイルがある場合は、nautilus ファイル マネージャーからドラッグ アンド ドロップします。 何も入力せずにリターンを押すと、example-image が指定されます。
+「11)Moebuntuテーマを削除する(やるに戻す)」を選択すると、Moebuntuの9色テーマファイルが削除され、「やる」の初期設定に戻ります。
 
-The choices for "12) and 13)" are items to set or remove Moe-Pink-Icon (kawaii icons).
+「12)」と「13)」の選択肢は、Moe-Pink-Icon (かわいいアイコン) を設定または削除する項目です。
 
-"14) set Moe-spinner plymouth" is a setting item of Moe (Kawaii) plymouth (OS loading waiting screen).
-If you want to set Toy's basic screen image, type "Y" in "Set Toy's basic plymouse screen image (Y)
-Or Set Original(or Example) plymouth png-file(N)?:". 
-If you choose "N" for using the original PNG image file as a plymouth image, drag and drop the PNG image file from the nautilus file manager.
-If you press the return key without entering anything, the example PNG image will be specified.
-(Note that the PNG image will be displayed in tiles. If you want a single image, you must match the resolution of your display.)
-"15) remove Moe-spinner plymouth" sets back to the default Plymouth where the default "UBUNTU spinner" is displayed.
+「14）萌えスピナープリマスの設定」は、萌えプリマス（OS読み込み待ち画面）の設定項目です。
+Toyの基本画面イメージを設定したい場合は「Toyの基本プリマウス画面イメージの設定(Y)」に「Y」と入力します。
+または元の(または例の) plymouth png-file(N)?:" を設定します。
+元の PNG 画像ファイルをプリマス画像として使用するために「N」を選択した場合は、nautilus ファイル マネージャーから PNG 画像ファイルをドラッグ アンド ドロップします。
+何も入力せずにリターンキーを押すと例のPNG画像が指定されます。
+(PNG 画像はタイルで表示されることに注意してください。単一の画像が必要な場合は、ディスプレイの解像度と一致する必要があります。)
+「15) Moe-spinner plymouth を削除する」は、デフォルトの「UBUNTU spinner」が表示されるデフォルトのプリマスに戻します。
 
-The "16) '' choices are used to switch the example background of the screen to a Moe image(Kawaii image)  pasting the "Moebuntu logo''
-If you want to use Toy's basic wallpaper image, type "Y" in " Set wallpaper to Toy's Basic image(Y)
- Or Set your original jpg-image or example image(N)"
-If you choose "N" for using the original JPG image file as wallpaper image, drag and drop the JPG image file from the nautilus file manager.
-If you press the return key without entering anything, the example JPG image will be specified.
+「16)」の選択肢は、画面例の背景を「Moebuntuロゴ」を貼り付けた萌え画像(カワイイ画像)に切り替える場合に使用します。
+トイの基本画像を使用したい場合は「壁紙をトイの基本画像に設定(Y)」に「Y」を入力してください。
+  または、元の jpg 画像またはサンプル画像を設定します(N)"
+元の JPG 画像ファイルを壁紙画像として使用するために "N" を選択した場合は、nautilus ファイル マネージャーから JPG 画像ファイルをドラッグ アンド ドロップします。
+何も入力せずにリターンキーを押すと例のJPG画像が指定されます。
 
-If you choose "17)", the background will return to the default background screen of "UBUNTU".
+「17)」を選択すると、背景はデフォルトの「UBUNTU」の背景画面に戻ります。
 
-Choices 18) and 19) are used for Firefox to be the Deb version or the Snap version. The Deb version of Firefox can run with a Moe (Kawaii) theme.
+選択肢 18) と 19) は、Firefox が Deb バージョンまたは Snap バージョンであるために使用されます。 Firefox の Deb バージョンは萌え (カワイイ) テーマで実行できます。
 
-Choices 20)~23) are used to set sounds (each version)
- Example version iori is made by aminetion amatur voice actor.
- Example version maid iori is maid-version of iori.
- Example version SF iori is SF-version of iori.
- Example version MGd is made whth Hatsune-Miku voice.
- 
-Choices 24) are used to remove Moe-sound all.
+選択肢 20)~23) はサウンドを設定するために使用されます (各バージョン)
+  作例版伊織はアメーション素人声優さん作です。
+  作例版メイド伊織は伊織のメイド版です。
+  サンプル版 SF iori は、iori の SF バージョンです。
+  作例版MGdは初音ミクの声で作られています。
+  選択肢 24) は、萌え音をすべて削除するために使用されます。
 
-## 3.About forking and improving this "Moebuntu Setup Helper"
-This script is basically MIT licensed. So I think it would be nice to fork, for example, to create a local language version.
-But the themes, Plymouth, and Icons are made by Toy.
-Therefore, please create a script that downloads them from GitHub. (Do not include works such as Toy's theme in scripts.)
+## 3.この「Moebuntu Setup Helper」のフォークと改良について
+このスクリプトは基本的に MIT ライセンスです。 なのでフォークして、例えば現地語版を作るといいと思います。
+ただし、テーマ、プリマス、およびアイコンはToyによって作成されています.
+そのため、GitHub からダウンロードするスクリプトを作成してください。 （トイズのテーマなどの作品は台本に含めないでください。）
