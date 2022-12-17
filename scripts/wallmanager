@@ -46,74 +46,55 @@ if [ "$1" = "install" ]; then
   # install
   echo "=$MoeWallFileNameをインストール="
   InstallCurl;
-  echo " Toyさんの基本イメージを壁紙にするには「Y]を押してください。"
-  echo " または、あなたのオリジナルの壁紙（JPG形式）を利用するか、例の壁紙を入れる場合には「N」を押してください：" 
-  if askyn; then
-    echo " $MoeBasicWallFileNameをダウンロードする。"
-    curl -L $MoeBasicWallUrl --output "$TempDir/$MoeBasicWallFileName"
-    echo " $TempDir/$MoeBasicWallFileNameから$SYSWallDir/$ConstMoeWallFileNameへコピーする。"
-    sudo cp "$TempDir/$MoeBasicWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
-    echo " システムをfile://$SYSWallDir/$ConstMoeWallFileNameに設定する。"
+  # Ask filename of wallpaper
+  read -p "設定するイメージファイル（JPG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合は例のイメージが使用されます。:" FileDrop
+  if [ "$FileDrop" = "" ]; then
+# set default login picture
+# download default login picture
+    echo " 例となるログインイメージをダウンロードします。" 
+    echo " $MoeWallFileNameをダウンロードします。"
+    curl -L $MoeWallUrl --output "$TempDir/$MoeWallFileName"
+    echo " $SYSWallDirへコピーします"
+    sudo cp "$TempDir/$MoeWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
+    echo " $MoeWallFileNameをシステムに設定します"
     gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName" 
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
+    echo "終了"
     echo " $TempDirという一時フォルダーを消します。"
     rm -rf $TempDir
     echo ""
     echo -n "何かキーを押してメニューに戻る:"
     read -r -n 1 -s answer
     echo ""
-    exit 0     
+    exit 0 
   else
-  # Ask filename of wallpaper
-    read -p "設定するイメージファイル（JPG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合は例のイメージが使用されます。:" FileDrop
-    if [ "$FileDrop" = "" ]; then
-# set default login picture
-# download default login picture
-      echo " 例となるログインイメージをダウンロードします。" 
-      echo " $MoeWallFileNameをダウンロードします。"
-      curl -L $MoeWallUrl --output "$TempDir/$MoeWallFileName"
-      echo " $SYSWallDirへコピーします"
-      sudo cp "$TempDir/$MoeWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
-      echo " $MoeWallFileNameをシステムに設定します"
-      gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
-      gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
-      echo "終了"
-      echo " $TempDirという一時フォルダーを消します。"
+  # FileDrop to login
+    WallFileFullPath=`echo $FileDrop | tr -d \'`
+    echo "=ドロップされた $WallFileFullPathを壁紙に設定します。="
+    if [ ! -e $WallFileFullPath ]; then
+      echo "ファイルがありません!"
+      echo "壁紙を変更できません。"
+     # remove temp-dir
       rm -rf $TempDir
       echo ""
       echo -n "何かキーを押してメニューに戻る:"
       read -r -n 1 -s answer
-      echo ""
-      exit 0 
-    else
-    # FileDrop to login
-      WallFileFullPath=`echo $FileDrop | tr -d \'`
-      echo "=ドロップされた $WallFileFullPathを壁紙に設定します。="
-      if [ ! -e $WallFileFullPath ]; then
-        echo "ファイルがありません!"
-        echo "壁紙を変更できません。"
-        # remove temp-dir
-        rm -rf $TempDir
-        echo ""
-        echo -n "何かキーを押してメニューに戻る:"
-        read -r -n 1 -s answer
-        echo ""     
-        exit 0   
-      fi
-      echo " $WallFileFullPathから$SYSWallDirへコピーする。"
-      sudo cp "$WallFileFullPath" "$SYSWallDir/$ConstMoeWallFileName"
-      echo " $WallFileFullPathをシステムに設定する。"
-      gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
-      gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
-      echo "終了"
-      echo " $TempDirという一時フォルダーを消します。"
-      rm -rf $TempDir
-      echo ""
-      echo -n "キーを押してメニューに戻る:"
-      read -r -n 1 -s answer
-      echo ""
-      exit 0 
+      echo ""     
+      exit 0   
     fi
+    echo " $WallFileFullPathから$SYSWallDirへコピーする。"
+    sudo cp "$WallFileFullPath" "$SYSWallDir/$ConstMoeWallFileName"
+    echo " $WallFileFullPathをシステムに設定する。"
+    gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
+    echo "終了"
+    echo " $TempDirという一時フォルダーを消します。"
+    rm -rf $TempDir
+    echo ""
+    echo -n "キーを押してメニューに戻る:"
+    read -r -n 1 -s answer
+    echo ""
+    exit 0 
   fi
   # remove
 elif [ "$1" = "remove" ]; then

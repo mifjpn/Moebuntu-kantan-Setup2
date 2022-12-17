@@ -2,7 +2,7 @@
 
 # main
 # remove all Moesound
-echo " もえ音を消します。"
+echo " 萌え音を消します。"
 sudo rm -rf /usr/share/sounds/Moe*
 # change sound gsetting
 echo " 既定の音に設定を戻します。"

@@ -101,7 +101,7 @@ if askyn; then
   sudo cp /usr/share/themes/$ThemeDirName/ubuntu-logo.png /usr/share/plymouth/ubuntu-logo.png
 
 # login png-file
-  echo "Toyさんの基本ログイン画面を使用する場合は「Y」を押してください。"
+  echo "Moebuntuの基本ログイン画面を使用する場合は「Y」を押してください。"
   echo " もしくは、自分のオリジナル画像（PNG形式）や例の画像を使用する場合は「N」を押してください。:"
   if ! askyn; then    
     read -p "自分のオリジナルのログインイメージ（PNG形式）を使用する場合は、ファイラからそのイメージファイルをドラックアンドドロップしてください。何もせずにリターンボタンを押すと例のイメージが使用されます。:" FileDrop
