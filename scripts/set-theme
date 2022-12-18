@@ -102,13 +102,13 @@ if askyn; then
 
 # login png-file
   echo "Moebuntuの基本ログイン画面を使用する場合は「Y」を押してください。"
-  echo " もしくは、自分のオリジナル画像（PNG形式）や例の画像を使用する場合は「N」を押してください。:"
+  echo " もしくは、自分のオリジナル画像（PNG形式）やこちらで用意した同じような見本の画像を使用する場合は「N」を押してください。:"
   if ! askyn; then    
-    read -p "自分のオリジナルのログインイメージ（PNG形式）を使用する場合は、ファイラからそのイメージファイルをドラックアンドドロップしてください。何もせずにリターンボタンを押すと例のイメージが使用されます。:" FileDrop
+    read -p "自分のオリジナルのログインイメージ（PNG形式）を使用する場合は、ファイラからそのイメージファイルをドラックアンドドロップしてください。何もせずにリターンボタンを押すとこちらで用意した同じような見本のイメージが使用されます。:" FileDrop
     if [ "$FileDrop" = "" ]; then
 # set default login picture
 # download default login picture
-      echo " 例のイメージの使用を選択しました。" 
+      echo " こちらで用意した同じような見本のイメージの使用を選択しました。" 
       echo -n " 四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか?"
       if ! askyn; then
         # not apply
@@ -126,7 +126,7 @@ if askyn; then
       curl -L $LoginDefaultPngUrl --output "$TempDir/$LoginDefaultFileName"
 
 # set default GDM
-      echo " 例のログイン画面をシステムに設定します。"
+      echo " 四国めたんちゃんログイン画面をシステムに設定します。"
       sudo cp $TempDir/$LoginDefaultFileName /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
     else
 
