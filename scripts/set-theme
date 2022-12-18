@@ -108,6 +108,19 @@ if askyn; then
     if [ "$FileDrop" = "" ]; then
 # set default login picture
 # download default login picture
+      echo " 例のイメージの使用を選択しました。" 
+      echo -n " 四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか?"
+      if ! askyn; then
+        # not apply
+        echo " apply Moebuntu basic login picture"
+        # remove temp-dir
+        rm -rf $TempDir
+        echo ""
+        echo -n "Hit Any Key:"
+        read -r -n 1 -s answer
+        echo ""     
+        exit 0        
+      fi
       echo " ログイン画面をダウンロードしています。" 
       echo " $TempDir/$LoginDefaultFileNameをダウンロードします。"
       curl -L $LoginDefaultPngUrl --output "$TempDir/$LoginDefaultFileName"

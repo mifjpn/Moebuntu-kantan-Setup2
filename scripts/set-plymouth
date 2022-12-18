@@ -111,6 +111,23 @@ read -p "自分のオリジナル（Png形式の）イメージを起動画面�
 if [ "$FileDrop" = "" ]; then
   # Null return
   # Set to default
+  echo " 例のイメージを選びました"
+  echo -n "  四国メタンちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか？"
+  if ! askyn; then
+    #Not choose
+    echo " Moebuntuの基本スクリーンイメージを使います"
+    # Remove tempdir
+    rm -rf $TempDir
+    # Update-initramfs
+    echo " initramfsをアップデートして、設定を反映させます。"
+    echo " <しばらくお待ちください>"
+    sudo update-initramfs -u -k all 
+    echo "終了"
+    echo -n "何かキーを押してメニューに戻る:"
+    read -r -n 1 -s answer  
+    echo ""
+    exit 0
+  fi
   echo " 例のイメージをダウンロードする。"
   curl -L $PlymouthDefaultPngUrl --output "$TempDir/$PlymouthDefaultFileName"
   # Set default plymouth picture

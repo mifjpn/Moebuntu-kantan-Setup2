@@ -49,6 +49,18 @@ if [ "$1" = "install" ]; then
   # Ask filename of wallpaper
   read -p "設定するイメージファイル（JPG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合は例のイメージが使用されます。:" FileDrop
   if [ "$FileDrop" = "" ]; then
+    echo " 例のイメージが選択されました"
+    echo -n "四国メタンちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使用しますか？"
+    if ! askyn; then
+      echo " 壁紙を適用できませんでした。"
+      # remove temp-dir
+      rm -rf $TempDir
+      echo ""
+      echo -n "何かキーを押してメニューに戻る:"
+      read -r -n 1 -s answer
+      echo ""     
+      exit 0 
+    fi      
 # set default login picture
 # download default login picture
     echo " 例となるログインイメージをダウンロードします。" 
