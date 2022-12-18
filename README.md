@@ -1,7 +1,7 @@
 # Moebuntu-kantan-Setup2
 Moebuntuのかんたんセットアップアプリ２です。
 ## 1.このセットアップヘルパーの概要
-このセットアップ ヘルパーは、[https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal]リポジトリ用です。
+このセットアップ ヘルパーは、”[mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal](https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal)''リポジトリ用です。
 リポジトリには、9 つの萌え (またはかわいい) カラー テーマのコレクションがあります。
 さらに、プリマスの萌え (またはカワイイ) テーマ (つまり、OS ロード時の画面) も含まれています。
 また、萌え (またはカワイイ) サウンド数種類も含まれます。
