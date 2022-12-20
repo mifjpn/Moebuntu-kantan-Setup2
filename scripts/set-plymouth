@@ -112,7 +112,7 @@ if [ "$FileDrop" = "" ]; then
   # Null return
   # Set to default
   echo " こちらで用意した同じような見本のイメージを選びました"
-  echo -n "  四国メタンちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか？"
+  echo -n "  四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか？"
   if ! askyn; then
     #Not choose
     echo " Moebuntuの基本スクリーンイメージを使います"
