@@ -34,15 +34,15 @@ echo -e "$COL_GREEN                          Moebuntu セッティング　ヘ�
 echo -e $COL_GREEN" ------------------------------------------------------------------------------"$COL_RESET
 PS3='選択肢を選んでね: '
 options=( '基礎の設定(最初にやること)'
-          'pinkのテーマ'
-          'blueのテーマ'
-          'greenのテーマ'
-          'bluegreenのテーマ'
-          'navyのテーマ'
-          'orangeのテーマ'
-          'purpleのテーマ'
-          'redのテーマ'
-          'yellowのテーマ'
+          'Pinkのテーマ'
+          'Blueのテーマ'
+          'Greenのテーマ'
+          'BlueGreenのテーマ'
+          'Navyのテーマ'
+          'Orangeのテーマ'
+          'Purpleのテーマ'
+          'Redのテーマ'
+          'Yellowのテーマ'
           '萌えテーマを消す'
           '萌えアイコン'
           '萌えアイコンを消す'
@@ -66,39 +66,39 @@ do
       /bin/bash install-GSM;
       break
     ;;
-    "pinkのテーマ")
+    "Pinkのテーマ")
       /bin/bash set-theme $ThemePink $LoginDefaltPicture ;
       break
     ;;
-    "blueのテーマ")
+    "Blueのテーマ")
       /bin/bash set-theme $ThemeBlue $LoginDefaltPicture;
       break
     ;;
-    "greenのテーマ")
+    "Greenのテーマ")
       /bin/bash set-theme $ThemeGreen $LoginDefaltPicture;
       break
     ;;
-    "bluegreenのテーマ")
+    "BlueGreenのテーマ")
       /bin/bash set-theme $ThemeBlueGreen $LoginDefaltPicture;
       break
     ;;
-    "navyのテーマ")
+    "Navyのテーマ")
       /bin/bash set-theme $ThemeNavy $LoginDefaltPicture;
       break
     ;;
-    "orangeのテーマ")
+    "Orangeのテーマ")
       /bin/bash set-theme $ThemeOrange $LoginDefaltPicture;
       break
     ;;
-    "purpleのテーマ")
+    "Purpleのテーマ")
       /bin/bash set-theme $ThemePurple $LoginDefaltPicture;
       break
     ;;
-    "yellowのテーマ")
+    "Yellowのテーマ")
       /bin/bash set-theme $ThemeYellow $LoginDefaltPicture;
       break
     ;;
-    "redのテーマ")
+    "Redのテーマ")
       /bin/bash set-theme $ThemeRed $LoginDefaltPicture;
       break
     ;;
