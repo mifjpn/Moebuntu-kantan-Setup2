@@ -91,7 +91,7 @@ echo " 今存在する起動画面はこれ: `ls -d "$PlymothThemePath/$MoePlymo
 
 # Change login screen
 echo " Moebuntuの基本スクリーンイメージを使う場合「Y」を押してください。"
-echo "　もしくは、自分のオリジナルのpng形式のイメージを入れる場合、また、こちらで用意した同じような見本のイメージを入れる場合は「N」を押してください。"
+echo "　もしくは、自分のオリジナルのpng形式のイメージを入れる場合、また、サンプルイメージを入れる場合は「N」を押してください。"
 if askyn; then
   # Moebuntu basic Change screen then not copy
   # Remove tempdir
@@ -107,11 +107,11 @@ if askyn; then
   exit 0
 fi
 # Choose Change Screen
-read -p "自分のオリジナル（Png形式の）イメージを起動画面にしたい場合は、ファイラからドラックアンドドロップしてください。そのまま何も入れすにエンターキーを押すとこちらで用意した同じような見本のイメージが設定されます。:" FileDrop
+read -p "自分のオリジナル（Png形式の）イメージを起動画面にしたい場合は、ファイラからドラックアンドドロップしてください。そのまま何も入れすにエンターキーを押すとサンプルイメージが設定されます。:" FileDrop
 if [ "$FileDrop" = "" ]; then
   # Null return
   # Set to default
-  echo " こちらで用意した同じような見本のイメージを選びました"
+  echo " サンプルイメージを選びました"
   echo -n "  四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか？"
   if ! askyn; then
     #Not choose
@@ -128,10 +128,10 @@ if [ "$FileDrop" = "" ]; then
     echo ""
     exit 0
   fi
-  echo " こちらで用意した同じような見本のイメージをダウンロードする。"
+  echo " サンプルイメージをダウンロードする。"
   curl -L $PlymouthDefaultPngUrl --output "$TempDir/$PlymouthDefaultFileName"
   # Set default plymouth picture
-  echo " こちらで用意した同じような見本のイメージを起動画面として設定する。"
+  echo " サンプルイメージを起動画面として設定する。"
   sudo cp "$TempDir/$PlymouthDefaultFileName" $MoePlymouthBackGroundFile
   else
   # Drag-and-Drop string exists
