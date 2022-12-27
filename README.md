@@ -27,7 +27,14 @@ Moebuntuのかんたんセットアップアプリ２です。
 
 2次以降の利用を、フリーとされた絵師の皆様に、御礼申し上げます。ありがとうございます。
 
-## 2.使い方
+## 2.以下の使い方を3パターンにしたYOUTUBEの解説ページがあります。
+## [Moebuntu自動セットアップアプリ２のページ、Moebuntu Setup Helper2 Main page](https://metanchan.hatenablog.com/entry/2022/12/25/090348)
+
+応用で、自分で用意したサンプル画像（YOUTUBE上ではオリジナル画像偏）では、SPYｘFAMILY化の紹介があります。
+
+　<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/m/metanchan/20221221/20221221125843.png" width="320" height="182">
+
+## 3.使い方
 ### 1)OS環境、ダウンロード、準備。
 「UBUNTU22.04Lts」をご用意ください。
 このスクリプトは、この OS で動作するはずです。
