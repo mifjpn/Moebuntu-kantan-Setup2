@@ -25,6 +25,8 @@ Moebuntuのかんたんセットアップアプリ２です。
 
 <img src="https://zunko.jp/sozai/methane_s/zzm_met007.png" width="250" height="428">
 
+2次以降の利用を、フリーとされた絵師の皆様に、御礼申し上げます。ありがとうございます。
+
 ## 2.使い方
 ### 1)OS環境、ダウンロード、準備。
 「UBUNTU22.04Lts」をご用意ください。
