@@ -8,6 +8,8 @@ SYSWallDir="/usr/share/backgrounds"
 DefaultWallFileName="warty-final-ubuntu.png"
 TempDir="Moebuntu.temp"
 ConstMoeWallFileName="moe_wall.jpg"
+ConstWallFileNameJpg="moe_wall.jpg"
+ConstWallFileNamePng="moe_wall.png"
 
 # Install curl
 InstallCurl() {
@@ -44,10 +46,10 @@ fi
 # install or remove?
 if [ "$1" = "install" ]; then
   # install
-  echo "=$MoeWallFileNameをインストール="
+  echo "=壁紙をインストール="
   InstallCurl;
   # Ask filename of wallpaper
-  read -p "設定するイメージファイル（JPG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合はサンプルイメージが使用されます。:" FileDrop
+  read -p "設定するイメージファイル（JPGかPNG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合はサンプルイメージが使用されます。:" FileDrop
   if [ "$FileDrop" = "" ]; then
     echo " サンプルイメージが選択されました"
     echo -n "四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使用しますか？"
@@ -63,7 +65,7 @@ if [ "$1" = "install" ]; then
     fi      
 # set default login picture
 # download default login picture
-    echo " 例となるログインイメージをダウンロードします。" 
+    echo " サンプルイメージをダウンロードします。" 
     echo " $MoeWallFileNameをダウンロードします。"
     curl -L $MoeWallUrl --output "$TempDir/$MoeWallFileName"
     echo " $SYSWallDirへコピーします"
@@ -95,6 +97,25 @@ if [ "$1" = "install" ]; then
       exit 0   
     fi
     echo " $WallFileFullPathから$SYSWallDirへコピーする。"
+    FileName=`echo $WallFileFullPath|awk -F"/" '{print $NF}'`
+    FileExtension=`echo ${FileName##*.}`
+    echo "拡張子は$FileExtension"
+    if [ $FileExtension = "jpg" ] || [ $FileExtension = "JPG" ]; then
+      ConstMoeWallFileName=$ConstWallFileNameJpg
+    elif [ $FileExtension = "png" ] || [ $FileExtension = "PNG" ]; then
+      ConstMoeWallFileName=$ConstWallFileNamePng
+    else
+      echo "拡張子がjpgやpngではありません。"
+      echo "jpgかpngファイルを入れてください"
+      echo "壁紙を変更できません。"
+     # remove temp-dir
+      rm -rf $TempDir
+      echo ""
+      echo -n "何かキーを押してメニューに戻る:"
+      read -r -n 1 -s answer
+      echo ""     
+      exit 0 
+    fi
     sudo cp "$WallFileFullPath" "$SYSWallDir/$ConstMoeWallFileName"
     echo " $WallFileFullPathをシステムに設定する。"
     gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
@@ -110,14 +131,18 @@ if [ "$1" = "install" ]; then
   fi
   # remove
 elif [ "$1" = "remove" ]; then
-  echo "=$MoeWallFileNameを消して、既定に設定します。="
+  echo "=${MoeWallFileName%.*}を消して、既定に設定します。="
   echo " $DefaultWallFileNameにシステムをセットします。"
   gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$DefaultWallFileName"
   gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$DefaultWallFileName"
   # if exsist remove MoeBuntuWall
-  if [ -e "$SYSWallDir/$ConstMoeWallFileName" ]; then
-    echo " $SYSWallDir/$ConstMoeWallFileNameを消します。"
-    sudo rm "$SYSWallDir/$ConstMoeWallFileName"
+  if [ -e "$SYSWallDir/$ConstWallFileNameJpg" ]; then
+    echo " $SYSWallDir/$ConstWallFileNameJpgを消します。"
+    sudo rm "$SYSWallDir/$ConstWallFileNameJpg"
+  fi
+  if [ -e "$SYSWallDir/$ConstWallFileNamePng" ]; then
+    echo " $SYSWallDir/$ConstWallFileNamePngを消します。"
+    sudo rm "$SYSWallDir/$ConstWallFileNamePng"
   fi
   echo "終了"
   echo ""
