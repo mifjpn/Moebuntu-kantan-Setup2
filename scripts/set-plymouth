@@ -4,6 +4,7 @@ MoePlymouthURL="https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal/raw
 MoePlymouthFileName=`echo $MoePlymouthURL|awk -F"/" '{print $NF}'`
 MoePlymouthDirName="mmspinner"
 MoePlymouthBackGroundFile="/usr/share/plymouth/themes/mmspinner/background-tile.png"
+MoePlymouthBackGroungFileName=`echo $MoePlymouthBackGroundFile|awk -F"/" '{print $NF}'`
 PlymothThemePath="/usr/share/plymouth/themes"
 MoeAlternativesPath="/usr/share/plymouth/themes/mmspinner/mmspinner.plymouth"
 DetaultAlternativesPath="/usr/share/plymouth/themes/bgrt/bgrt.plymouth"
@@ -58,7 +59,7 @@ if [ ! -d $TempDir ]; then
 fi
 
 # Install curl
-echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールする。"
+echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールします。"
 dpkg -s curl >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt install -y curl
@@ -66,6 +67,16 @@ if [ ! $? -eq 0 ]; then
   else
       echo " すでにインストールされていました。"
 fi
+
+# Install imagemagick-2212291856
+echo " 下準備でcurlというイメージ変換コマンドをインストールします。"
+dpkg -s imagemagick >/dev/null 2>&1
+if [ ! $? -eq 0 ]; then
+  sudo apt install -y imagemagick
+  else
+      echo " すでにインストールされていました。"
+fi
+
 
 # Download Plymouth
 echo " $MoePlymouthFileNameをダウンロードします。"
@@ -91,7 +102,7 @@ echo " 今存在する起動画面はこれ: `ls -d "$PlymothThemePath/$MoePlymo
 
 # Change login screen
 echo " Moebuntuの基本スクリーンイメージを使う場合「Y」を押してください。"
-echo "　もしくは、自分のオリジナルのpng形式のイメージを入れる場合、また、サンプルイメージを入れる場合は「N」を押してください。"
+echo "　もしくは、自分のオリジナルのpngなどの形式のイメージを入れる場合、また、サンプルイメージを入れる場合は「N」を押してください。"
 if askyn; then
   # Moebuntu basic Change screen then not copy
   # Remove tempdir
@@ -107,7 +118,7 @@ if askyn; then
   exit 0
 fi
 # Choose Change Screen
-read -p "自分のオリジナル（Png形式の）イメージを起動画面にしたい場合は、ファイラからドラックアンドドロップしてください。そのまま何も入れすにエンターキーを押すとサンプルイメージが設定されます。:" FileDrop
+read -p "自分のオリジナル（png形式などの）イメージを起動画面にしたい場合は、ファイラからドラックアンドドロップしてください。そのまま何も入れすにエンターキーを押すとサンプルイメージが設定されます。:" FileDrop
 if [ "$FileDrop" = "" ]; then
   # Null return
   # Set to default
@@ -151,8 +162,32 @@ if [ "$FileDrop" = "" ]; then
     echo ""     
     exit 0   
   fi
-  echo " 起動画面のイメージを$PlymouthFileに変えます。"
-  sudo cp $PlymouthFile $MoePlymouthBackGroundFile
+  # file conversion-2212291856
+  FileName=`echo $PlymouthFile|awk -F"/" '{print $NF}'`
+  FileExtension=`echo ${FileName##*.}`
+  echo "FileExtension is $FileExtension"
+  if [ $FileExtension = "png" ] || [ $FileExtension = "PNG" ]; then  
+    echo " 起動等待ち画面を$PlymouthFileにします。"
+    sudo cp $PlymouthFile $MoePlymouthBackGroundFile
+    echo ""
+  else
+    echo " convert $PlymouthFile to $TempDir/$MoePlymouthBackGroungFileName"
+    ReturnValue=`convert $PlymouthFile $TempDir/$MoePlymouthBackGroungFileName`
+    if [ "$ReturnValue" != "" ]; then
+      echo "png形式にイメージを転換できませんでした。（画像ファイルを入れてください）"
+      echo "起動等待ち画面を変更できませんでした。"
+      # remove temp-dir
+      rm -rf $TempDir
+      echo ""
+      echo -n "何かキーを押してメニューに戻る:"
+      read -r -n 1 -s answer
+      echo ""     
+      exit 0
+    fi
+    sudo cp $TempDir/$MoePlymouthBackGroungFileName $MoePlymouthBackGroundFile
+    echo "終了"
+    echo ""
+  fi
 fi
 # remove temp-dir
 rm -rf $TempDir

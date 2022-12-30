@@ -53,10 +53,19 @@ if [ ! -d $TempDir ]; then
   mkdir $TempDir
 fi
 # Install curl
-echo "=下準備でcurlというネットからのダウンロード用のコマンドをインストールする。="
+echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールする。"
 dpkg -s curl >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt install -y curl
+  else
+      echo " すでにインストールされていました。"
+fi
+
+# Install imagemagick-2212291856
+echo " 下準備でimagemagickというイメージ変換コマンドをインストールする。"
+dpkg -s imagemagick >/dev/null 2>&1
+if [ ! $? -eq 0 ]; then
+  sudo apt install -y imagemagick
   else
       echo " すでにインストールされていました。"
 fi
@@ -102,9 +111,9 @@ if askyn; then
 
 # login png-file
   echo "Moebuntuの基本ログイン画面を使用する場合は「Y」を押してください。"
-  echo " もしくは、自分のオリジナル画像（PNG形式）やサンプルイメージを使用する場合は「N」を押してください。:"
+  echo " もしくは、自分のオリジナル画像やサンプルイメージを使用する場合は「N」を押してください。:"
   if ! askyn; then    
-    read -p "自分のオリジナルのログインイメージ（PNG形式）を使用する場合は、ファイラからそのイメージファイルをドラックアンドドロップしてください。何もせずにリターンボタンを押すとサンプルイメージが使用されます。:" FileDrop
+    read -p "自分のオリジナルのログインイメージ（PNG形式など）を使用する場合は、ファイラからそのイメージファイルをドラックアンドドロップしてください。何もせずにリターンボタンを押すとサンプルイメージが使用されます。:" FileDrop
     if [ "$FileDrop" = "" ]; then
 # set default login picture
 # download default login picture
@@ -112,11 +121,11 @@ if askyn; then
       echo -n " 四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使いますか?"
       if ! askyn; then
         # not apply
-        echo " apply Moebuntu basic login picture"
+        echo " Mebuntuの基本イメージが適用されます"
         # remove temp-dir
         rm -rf $TempDir
         echo ""
-        echo -n "Hit Any Key:"
+        echo -n "キーを押してメニューに戻る:"
         read -r -n 1 -s answer
         echo ""     
         exit 0        
@@ -143,6 +152,32 @@ if askyn; then
         read -r -n 1 -s answer
         echo ""     
         exit 0   
+      fi
+      # file conversion-2212291856
+      FileName=`echo $LoginFile|awk -F"/" '{print $NF}'`
+      FileExtension=`echo ${FileName##*.}`
+      echo "ファイルの拡張子は $FileExtensionです。"
+      if [ $FileExtension = "png" ] || [ $FileExtension = "PNG" ]; then  
+        sudo cp $LoginFile /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
+        echo "終了"
+        echo ""
+      else
+        echo " Convertコマンドで $LoginFile を $TempDir/moebuntu_bg.pngに変えます"
+        ReturnValue=`convert $LoginFile $TempDir/moebuntu_bg.png`
+        if [ "$ReturnValue" != "" ]; then
+          echo "convertできませんでした。別の形式のイメージファイルを用意してください"
+          echo "ログイン画面は変更できませんでした。"
+          # remove temp-dir
+          rm -rf $TempDir
+          echo ""
+          echo -n "Hit Any Key:"
+          read -r -n 1 -s answer
+          echo ""     
+          exit 0
+        fi
+        sudo cp $TempDir/moebuntu_bg.png /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
+        echo "終了"
+        echo ""
       fi
       sudo cp $LoginFile /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
       echo "終了"

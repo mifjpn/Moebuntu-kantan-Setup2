@@ -13,7 +13,7 @@ ConstWallFileNamePng="moe_wall.png"
 
 # Install curl
 InstallCurl() {
-  echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールする。"
+  echo "  下準備でcurlというネットからのダウンロード用のコマンドをインストールします。"
   dpkg -s curl >/dev/null 2>&1
   if [ ! $? -eq 0 ]; then
     sudo apt -y install curl
@@ -22,6 +22,18 @@ InstallCurl() {
   fi
   echo ""
 }
+
+# Install imagemagick-2212291856
+InstallImagemagick() {
+echo "  下準備でimagemagickというイメージ変換コマンドをインストールします。"
+dpkg -s imagemagick >/dev/null 2>&1
+if [ ! $? -eq 0 ]; then
+  sudo apt install -y imagemagick
+  else
+      echo " すでにインストールされていました。"
+fi
+}
+
 #Ask Yn
 askyn() {
   echo -n "(Y/N)? "
@@ -46,11 +58,14 @@ fi
 # install or remove?
 if [ "$1" = "install" ]; then
   # install
-  echo "=壁紙をインストール="
+  echo "=Install Desktop Wallpaper="
   InstallCurl;
+  InstallImagemagick;
   # Ask filename of wallpaper
-  read -p "設定するイメージファイル（JPGかPNG形式）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合はサンプルイメージが使用されます。:" FileDrop
+  read -p "設定するイメージファイル（JPGやPNG形式など）をファイラからドラックアンドドロップしてください。そのまま何も入れずにリターンボタンを押した場合はサンプルイメージが使用されます。:" FileDrop
   if [ "$FileDrop" = "" ]; then
+# set default login picture
+# download default login picture
     echo " サンプルイメージが選択されました"
     echo -n "四国めたんちゃん（東日本大震災からの復興キャラクター）の萌えイメージを使用しますか？"
     if ! askyn; then
@@ -63,18 +78,16 @@ if [ "$1" = "install" ]; then
       echo ""     
       exit 0 
     fi      
-# set default login picture
-# download default login picture
     echo " サンプルイメージをダウンロードします。" 
     echo " $MoeWallFileNameをダウンロードします。"
     curl -L $MoeWallUrl --output "$TempDir/$MoeWallFileName"
     echo " $SYSWallDirへコピーします"
     sudo cp "$TempDir/$MoeWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
-    echo " $MoeWallFileNameをシステムに設定します"
+    echo " $MoeWallFileNameをセット。"
     gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
-    echo "終了"
-    echo " $TempDirという一時フォルダーを消します。"
+    echo "Done"
+    echo " 一時フォルダ$TempDirを消去します。"
     rm -rf $TempDir
     echo ""
     echo -n "何かキーを押してメニューに戻る:"
@@ -84,11 +97,11 @@ if [ "$1" = "install" ]; then
   else
   # FileDrop to login
     WallFileFullPath=`echo $FileDrop | tr -d \'`
-    echo "=ドロップされた $WallFileFullPathを壁紙に設定します。="
+    echo "ドロップされた $WallFileFullPathを壁紙に設定します。="
     if [ ! -e $WallFileFullPath ]; then
       echo "ファイルがありません!"
       echo "壁紙を変更できません。"
-     # remove temp-dir
+      # remove temp-dir
       rm -rf $TempDir
       echo ""
       echo -n "何かキーを押してメニューに戻る:"
@@ -96,52 +109,81 @@ if [ "$1" = "install" ]; then
       echo ""     
       exit 0   
     fi
-    echo " $WallFileFullPathから$SYSWallDirへコピーする。"
+    echo " $WallFileFullPath を $SYSWallDir へコピー"
     FileName=`echo $WallFileFullPath|awk -F"/" '{print $NF}'`
     FileExtension=`echo ${FileName##*.}`
-    echo "拡張子は$FileExtension"
+    echo "　拡張子は $FileExtension です。"
     if [ $FileExtension = "jpg" ] || [ $FileExtension = "JPG" ]; then
       ConstMoeWallFileName=$ConstWallFileNameJpg
     elif [ $FileExtension = "png" ] || [ $FileExtension = "PNG" ]; then
       ConstMoeWallFileName=$ConstWallFileNamePng
     else
-      echo "拡張子がjpgやpngではありません。"
-      echo "jpgかpngファイルを入れてください"
-      echo "壁紙を変更できません。"
-     # remove temp-dir
+      echo "拡張子がpngかjpgではありません"
+      echo " pngファイルにイメージを変換します"
+      # convert to png
+      ConstMoeWallFileName=$ConstWallFileNamePng
+#      echo "FileExtension is $FileExtension"
+      echo " Convert $WallFileFullPath to $TempDir/$ConstMoeWallFileName"
+      ReturnValue=`convert $WallFileFullPath $TempDir/$ConstMoeWallFileName`
+      if [ "$ReturnValue" != "" ]; then
+        echo "PNG形式に変換できません。（イメージファイルを指定してください）"
+        echo "壁紙を変更できません。"
+        # remove temp-dir
+        rm -rf $TempDir
+        echo ""
+        echo -n "何かキーを押してメニューに戻る:"
+        read -r -n 1 -s answer
+        echo ""     
+        exit 0
+      fi
+      sudo cp "$TempDir/$ConstMoeWallFileName" "$SYSWallDir/$ConstMoeWallFileName"
+      echo "終了"
+      echo " $TempDir/$ConstMoeWallFileName を $SYSWallDir/$ConstMoeWallFileName へセットします。"
+      gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
+      gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
+      echo "終了"
+      echo " 一時フォルダ $TempDir を消去します"
       rm -rf $TempDir
       echo ""
       echo -n "何かキーを押してメニューに戻る:"
       read -r -n 1 -s answer
-      echo ""     
-      exit 0 
+      echo ""
+      exit 0
     fi
+    echo " $WallFileFullPath から $SYSWallDir へコピーします。"
     sudo cp "$WallFileFullPath" "$SYSWallDir/$ConstMoeWallFileName"
-    echo " $WallFileFullPathをシステムに設定する。"
+    echo " $WallFileFullPath をセットします"
     gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$ConstMoeWallFileName"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$ConstMoeWallFileName"
     echo "終了"
-    echo " $TempDirという一時フォルダーを消します。"
+    echo " 一時フォルダ $TempDir を消去します。"
+     # remove temp-dir
     rm -rf $TempDir
     echo ""
-    echo -n "キーを押してメニューに戻る:"
+    echo -n "何かキーを押してメニューに戻る:"
     read -r -n 1 -s answer
-    echo ""
+    echo ""     
     exit 0 
   fi
-  # remove
+  rm -rf $TempDir
+  echo ""
+  echo -n "何かキーを押してメニューに戻る:"
+  read -r -n 1 -s answer
+  echo ""
+  exit 0 
+# remove
 elif [ "$1" = "remove" ]; then
-  echo "=${MoeWallFileName%.*}を消して、既定に設定します。="
-  echo " $DefaultWallFileNameにシステムをセットします。"
+  echo " ${MoeWallFileName%.*} を消して、デフォルトへセットします。"
+  echo " seting to $DefaultWallFileName"
   gsettings set org.gnome.desktop.background picture-uri "file://$SYSWallDir/$DefaultWallFileName"
   gsettings set org.gnome.desktop.background picture-uri-dark "file://$SYSWallDir/$DefaultWallFileName"
   # if exsist remove MoeBuntuWall
   if [ -e "$SYSWallDir/$ConstWallFileNameJpg" ]; then
-    echo " $SYSWallDir/$ConstWallFileNameJpgを消します。"
+    echo " remove $SYSWallDir/$ConstWallFileNameJpg"
     sudo rm "$SYSWallDir/$ConstWallFileNameJpg"
   fi
   if [ -e "$SYSWallDir/$ConstWallFileNamePng" ]; then
-    echo " $SYSWallDir/$ConstWallFileNamePngを消します。"
+    echo " remove $SYSWallDir/$ConstWallFileNamePng"
     sudo rm "$SYSWallDir/$ConstWallFileNamePng"
   fi
   echo "終了"
@@ -149,10 +191,10 @@ elif [ "$1" = "remove" ]; then
 else
   echo "install? remove?"
 fi
-echo " $TempDirという一時フォルダーを消します。"
+echo " 一時フォルダ $TempDir を消去します。"
 rm -rf $TempDir
 echo ""
-echo -n "キーを押してメニューに戻る:"
+echo -n "何かキーを押してメニューに戻る:"
 read -r -n 1 -s answer
 echo ""
 
