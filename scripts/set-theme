@@ -136,13 +136,13 @@ if askyn; then
 
 # set default GDM
       echo " 四国めたんちゃんログイン画面をシステムに設定します。"
-      sudo cp $TempDir/$LoginDefaultFileName /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
+      sudo cp "$TempDir/$LoginDefaultFileName" /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
     else
 
 # FileDrop to login
       LoginFile=`echo $FileDrop | tr -d \'`
       echo "$LoginFileをログイン画面にします。 "
-      if [ ! -e $LoginFile ]; then
+      if [ ! -e "$LoginFile" ]; then
         echo "ファイルがありません。"
         echo "ログイン画面を変えられません。"
         # remove temp-dir
@@ -158,12 +158,12 @@ if askyn; then
       FileExtension=`echo ${FileName##*.}`
       echo "ファイルの拡張子は $FileExtensionです。"
       if [ $FileExtension = "png" ] || [ $FileExtension = "PNG" ]; then  
-        sudo cp $LoginFile /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
+        sudo cp "$LoginFile" /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
         echo "終了"
         echo ""
       else
         echo " Convertコマンドで $LoginFile を $TempDir/moebuntu_bg.pngに変えます"
-        ReturnValue=`convert $LoginFile $TempDir/moebuntu_bg.png`
+        ReturnValue=`convert "$LoginFile" $TempDir/moebuntu_bg.png`
         if [ "$ReturnValue" != "" ]; then
           echo "convertできませんでした。別の形式のイメージファイルを用意してください"
           echo "ログイン画面は変更できませんでした。"
@@ -179,7 +179,7 @@ if askyn; then
         echo "終了"
         echo ""
       fi
-      sudo cp $LoginFile /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
+      sudo cp "$LoginFile" /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
       echo "終了"
       echo ""
     fi
