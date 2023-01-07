@@ -29,6 +29,11 @@ Moebuntuのかんたんセットアップアプリ２です。
 
 ## 2.以下の使い方を3パターンにしたYOUTUBEの解説ページがあります。
 ## [Moebuntu自動セットアップアプリ２のページ、Moebuntu Setup Helper2 Main page](https://metanchan.hatenablog.com/entry/2022/12/25/090348)
+[![](https://img.youtube.com/vi/Xm3R_s7lgHc/0.jpg)](https://www.youtube.com/watch?v=Xm3R_s7lgHc)
+
+[![](https://img.youtube.com/vi/hmjTDQlalrM/0.jpg)](https://www.youtube.com/watch?v=hmjTDQlalrM)
+
+[![](https://img.youtube.com/vi/otO0eZIvUuE/0.jpg)](https://www.youtube.com/watch?v=otO0eZIvUuE)
 
 応用で、自分で用意したサンプル画像（YOUTUBE上ではオリジナル画像偏）では、SPYｘFAMILY化の紹介があります。
 
