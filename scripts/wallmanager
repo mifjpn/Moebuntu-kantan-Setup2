@@ -124,7 +124,7 @@ if [ "$1" = "install" ]; then
       ConstMoeWallFileName=$ConstWallFileNamePng
 #      echo "FileExtension is $FileExtension"
       echo " Convert $WallFileFullPath to $TempDir/$ConstMoeWallFileName"
-      ReturnValue=`convert $WallFileFullPath $TempDir/$ConstMoeWallFileName`
+      ReturnValue=`convert "$WallFileFullPath" $TempDir/$ConstMoeWallFileName`
       if [ "$ReturnValue" != "" ]; then
         echo "PNG形式に変換できません。（イメージファイルを指定してください）"
         echo "壁紙を変更できません。"
