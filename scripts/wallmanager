@@ -98,7 +98,7 @@ if [ "$1" = "install" ]; then
   # FileDrop to login
     WallFileFullPath=`echo $FileDrop | tr -d \'`
     echo "ドロップされた $WallFileFullPathを壁紙に設定します。="
-    if [ ! -e $WallFileFullPath ]; then
+    if [ ! -e "$WallFileFullPath" ]; then
       echo "ファイルがありません!"
       echo "壁紙を変更できません。"
       # remove temp-dir
