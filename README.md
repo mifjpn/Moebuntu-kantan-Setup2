@@ -29,6 +29,9 @@ Moebuntuのかんたんセットアップアプリ２です。
 
 ## 2.以下の使い方を3パターンにしたYOUTUBEの解説ページがあります。
 ## [Moebuntu自動セットアップアプリ２のページ、Moebuntu Setup Helper2 Main page](https://metanchan.hatenablog.com/entry/2022/12/25/090348)
+
+以下の画像をクリックすると、YOUTUBE動画が見れます。
+
 [![](https://img.youtube.com/vi/Xm3R_s7lgHc/0.jpg)](https://www.youtube.com/watch?v=Xm3R_s7lgHc)
 
 [![](https://img.youtube.com/vi/hmjTDQlalrM/0.jpg)](https://www.youtube.com/watch?v=hmjTDQlalrM)
