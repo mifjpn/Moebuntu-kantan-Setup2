@@ -118,6 +118,11 @@ OSの起動待ち画面に入れたいオリジナルのPNG形式の画像を入
 
 ## 3.既知のエラーについて
 　Virtual-Box上のUBUNTUの一部で、user-themeが作られない問題が上がっています。しかし、一部の場合であって再現ができませんでした。もし起こった場合は、"Gnome Tweaks"でテーマを設定するか、再起動するといいようです。
+　UBUNTUのバージョンを再インストールせずにアップグレードした場合、最初の基礎の設定が上手くいかない場合があります。
+ ```
+　sudo apt remove gnome-shell-extension-manager
+ ```
+ などとして、いったん基礎の設定用のgnome-shell-extension-managerをリムーブしてください。
 
 ## 4.この「Moebuntu Setup Helper」のフォークと改良について
 このスクリプトは基本的に MIT ライセンスです。 なのでフォークして、例えば現地語版を作るといいと思います。
