@@ -1,31 +1,32 @@
 #!/bin/bash
 
 extman(){
-    echo "1.上の「探す」タブを押して、\"User Themes\"を探してください。 "
-    echo "2.そこの「追加」ボタンを押して、インストールしてください。"
-    echo "3.上の「追加済み」タブを押して、その右のスイッチを「オン」にしてください。（右にスライドでオンです）"
-    echo "　もし、上にスイッチがない場合は、 \"use extention\"のスイッチを「オン」にしてください。"
-    echo "4.\"User Themes\"の右にあるスイッチを「オン」にしてください。"
+    echo "1.Search for \"User Themes\" in the \"Browse\" tab"
+    echo "2.Click the \"Install\" button to install"
+    echo "3.Go to the \"Installed\" tab and activate the Extension by setting the switch on the header to \"ON\" (to the right)"
+    echo " If there is no switch in the header and there is a switch in \"use extention\", please turn it \"ON\" (slide to the right)."
+    echo "4.turn on the switch to the right of \"User Themes\""
+    echo "5.close the window"
 extension-manager 2> /dev/null
 }
 
 # Main
-echo "gnome-shell-managerをインストールします。"
+echo "Install gnome-shell-manager"
 dpkg -s gnome-shell-extension-manager >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt -y install gnome-shell-extension-manager
-  echo "終了"
+  echo "done"
   echo ""
   else
-      echo "すでにインストールされていました。"
+      echo "Already Installed"
 fi
-echo "--以下の手順で、今出できたWindowをセットしてください。--"
+echo "--Please set extention-manager--"
 extman;
-echo "ありがとうございます。"
-echo " 「user-theme」というシステム設定項目を有効化します"
+echo "thank you!"
+echo " activate user-theme"
 sudo cp ~/.local/share/gnome-shell/extensions/user-theme@gnome-shell-extensions.gcampax.github.com/schemas/org.gnome.shell.extensions.user-theme.gschema.xml /usr/share/glib-2.0/schemas && sudo glib-compile-schemas /usr/share/glib-2.0/schemas
 echo ""
-echo -n "キーを押してメニューに戻る:"
+echo -n "Hit Any Key:"
 read -r -n 1 -s answer
 echo ""
 

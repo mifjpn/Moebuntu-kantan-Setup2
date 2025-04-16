@@ -17,36 +17,36 @@ if [ ! -d $TempDir ]; then
   mkdir $TempDir
 fi
 # Install curl
-echo " 下準備でcurlというネットからのダウンロード用のコマンドをインストールする。"
+echo " Install curl"
 dpkg -s curl >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt install -y curl
   else
-      echo " すでにインストールされていました。"
+      echo " Already Installed"
 fi
 
 # Download Sound
-echo " $SoundFileNameをダウンロードします。"
+echo " download $SoundFileName"
 curl -L $SoundUrl --output "$TempDir/$SoundFileName"
 
 # Unpack
-echo " $SoundFileNameを展開します。"
+echo " unpack $SoundFileName"
 tar -xf "$TempDir/$SoundFileName" -C $TempDir > /dev/null 2> /dev/null
 
 # set to themes Sound
-echo " システムのサウンドフォルダにコピーします。"
+echo " copy to system theme folder"
 cd $TempDir
 sudo cp -R $SoundDirName /usr/share/sounds/
 cd ..
-echo "いまシステムに存在する萌サウンド: `ls -d /usr/share/sounds/Moe*`"
+echo "Exist Moe Sound(s): `ls -d /usr/share/sounds/Moe*`"
 echo ""
 # change sound gsetting
-echo " $SoundNameにシステムにサウンドテーマを変更する。"
+echo " change sound gsettings $SoundName"
 gsettings set org.gnome.desktop.sound theme-name $SoundName
 # remove temp-dir
 rm -rf $TempDir
 echo ""
-echo -n "キーを押してメニューに戻る:"
+echo -n "Hit Any Key:"
 read -r -n 1 -s answer
 echo ""
 exit 0

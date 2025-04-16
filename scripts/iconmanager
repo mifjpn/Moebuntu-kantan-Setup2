@@ -1,6 +1,6 @@
 #!/bin/bash
 #==== MoeIcon variable ====
-MoeIconUrl="https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal/raw/22.04Lts/icons/MoePinkIcons_201117.tar.xz"
+MoeIconUrl="https://github.com/mifjpn/Moebuntu-kawaiiUbuntu-ToysOriginal/raw/24.04Lts/icons/MoePinkIcons_201117.tar.xz"
 MoeIconFileName=`echo $MoeIconUrl|awk -F"/" '{print $NF}'`
 MoeIconDirName=`echo $MoeIconFileName|awk '{print substr($0,0,index($0,"_")-1)}'`
 MoeIconName=$MoeIconDirName
@@ -10,14 +10,14 @@ TempDir="Moebuntu.temp"
 
 # Install curl
 InstallCurl() {
-  echo "=下準備でcurlというネットからのダウンロード用のコマンドをインストールする。="
+  echo "=Install curl="
   dpkg -s curl >/dev/null 2>&1
   if [ ! $? -eq 0 ]; then
     sudo apt install -y curl
-    echo "終了"
+    echo "done"
     echo ""
     else
-        echo "すでにインストールされていました。"
+        echo "Already Installed"
   fi
   echo ""
 }
@@ -25,43 +25,44 @@ InstallCurl() {
 # main
 # make temp directory
 if [ ! -d $TempDir ]; then
-  echo "=$TempDirという、一時フォルダを作ります="
+  echo "=Create temp folder $TempDir="
   mkdir $TempDir
 fi
 
 # install or remove?
 if [ "$1" = "install" ]; then
   # install
-  echo "=$MoeIconFileNameをインストールします。="
+  echo "=Install $MoeIconFileName="
   InstallCurl;
-  echo " $MoeIconFileNameをダウンロードします。"
+  echo " download $MoeIconFileName"
   curl -L $MoeIconUrl --output "$TempDir/$MoeIconFileName"
-  echo " $MoeIconFileNameを展開します"
+  echo " unpack $MoeIconFileName"
   tar Jxfv "$TempDir/$MoeIconFileName" -C $TempDir > /dev/null 2> /dev/null
-  echo " $SYSIconDir　フォルダへコピーします。"
+  echo " copy to $SYSIconDir"
   sudo cp -R "$TempDir/$MoeIconDirName" "$SYSIconDir"
-  echo " $MoeIconNameをシステムに設定します。"
+  echo " exsist Moe*:`ls -d /usr/share/icons/Moe*`"
+  echo " setting to $MoeIconName"
   gsettings set org.gnome.desktop.interface icon-theme "$MoeIconName"
-  echo "終了"
+  echo "Done"
   # remove
   elif [ "$1" = "remove" ]; then
-    echo "=$MoeIconFileNameを消して、既定のアイコンに戻します。 ="
-    echo " $DefaultIconNameをシステムに設定します。"
+    echo "=Remove $MoeIconFileName and set detault="
+    echo " seting to $DefaultIconName"
     gsettings set org.gnome.desktop.interface icon-theme "$DefaultIconName"
     # if exsist remove MoeBuntuIcon
     if [ -d "$SYSIconDir/$MoeIconDirName" ]; then
-      echo " $SYSIconDir/$MoeIconDirNameを消します。"
+      echo " Remove $SYSIconDir/$MoeIconDirName"
       sudo rm -rf "$SYSIconDir/$MoeIconDirName"
     fi
-    echo "終了"
+    echo "Done"
     echo ""
   else
     echo "install? remove?"
 fi
 
-echo "=$TempDirという一時フォルダーを消します。="
+echo "=Delete temp folder $TempDir="
 rm -rf $TempDir
 
 echo ""
-echo -n "キーを押してメニューに戻る:"
+echo -n "Hit Any Key:"
 read -r -n 1 -s answer
