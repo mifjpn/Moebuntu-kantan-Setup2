@@ -1,7 +1,7 @@
 #!/bin/bash
 
 asksure() {
-  echo -n "Are you sure (Y/N)? "
+  echo -n "本当にいいですか？ (Y/N)? "
   while read -r -n 1 -s answer; do
     if [[ $answer = [YyNn] ]]; then
       [[ $answer = [Yy] ]] && retval=0
@@ -13,7 +13,7 @@ asksure() {
   return $retval
 }
 removeallmoethemes() {
-  echo "=Remove MoeAllColor theme="
+  echo "=すべてのここでの色のテーマを取り消す="
   if [ -d /usr/share/themes/Moe-Green17 ]; then
     sudo rm -rf /usr/share/themes/Moe-Green17
   fi
@@ -41,11 +41,11 @@ removeallmoethemes() {
   if [ -d /usr/share/themes/Moe-Pink17 ]; then
     sudo rm -rf /usr/share/themes/Moe-Pink17
   fi
-  echo "Done"
+  echo "完了"
 }
 
 removethemealtanatives() {
-echo "=Remove all Moe GDM altanetives="
+echo "=すべての萌え(カワイイ) GDM altanetives を取り消す="
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Green17/gnome-shell/gnome-shell-theme.gresource
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-BlueGreen17/gnome-shell/gnome-shell-theme.gresource
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Navy17/gnome-shell/gnome-shell-theme.gresource
@@ -55,36 +55,36 @@ echo "=Remove all Moe GDM altanetives="
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Yellow17/gnome-shell/gnome-shell-theme.gresource
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Blue17/gnome-shell/gnome-shell-theme.gresource
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Pink17/gnome-shell/gnome-shell-theme.gresource
-echo "Done"
+echo "完了"
 }
 
 loginlogobak() {
-echo "=Login logo change to default(if exist back up)="
+echo "=ログインのロゴをデフォルトに変更します（もしバックアップされているのであればですが="
 if [ -e /usr/share/plymouth/ubuntu-logo.org.png ]; then
   sudo cp /usr/share/plymouth/ubuntu-logo.org.png /usr/share/plymouth/ubuntu-logo.png
-echo "Done"
+echo "完了"
 fi
 }
 
 ### main
-echo "=Set theme to defalt(Yaru)="
+echo "=テーマをデフォルトのYaruに設定する="
 gsettings set org.gnome.desktop.interface gtk-theme "Yaru"
 gsettings set org.gnome.shell.extensions.user-theme name "Yaru"
-echo "Done"
+echo "完了"
 # delete Moe-theme
 echo ""
 removeallmoethemes;
 echo ""
 # GDM theme to default
-echo "=Set GDM Altanetive to Yaru(Default)="
+echo "=GDM Altanetive to デフォルトのYaruに設定する="
 sudo update-alternatives --set gdm-theme.gresource /usr/share/gnome-shell/theme/Yaru/gnome-shell-theme.gresource >/dev/null 2>/dev/null
-echo "Done"
+echo "完了"
 echo ""
 removethemealtanatives;
 echo ""
 # login logo chane to default,if backuped
 loginlogobak;
 echo ""
-echo -n "Hit Any Key:"
+echo -n "なにかキーを押してください:"
 read -r -n 1 -s answer
 

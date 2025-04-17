@@ -26,15 +26,15 @@ askyn() {
 
 
 loginlogobak() {
-echo "=Login logo change to default(if exist back up)="
+echo "=ログイン画面のロゴ（バナー）をデフォルトに変えます。(バックアップされているのであればですが）="
 if [ -e /usr/share/plymouth/ubuntu-logo.org.png ]; then
   sudo cp /usr/share/plymouth/ubuntu-logo.org.png /usr/share/plymouth/ubuntu-logo.png
-echo "Done"
+echo "完了"
 fi
 }
 
 removethemealtanatives() {
-echo "=Remove all Moe GDM altanetives="
+echo "= すべての Moe GDM altanetives を消します。="
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Green17/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-BlueGreen17/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Navy17/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
@@ -44,7 +44,7 @@ echo "=Remove all Moe GDM altanetives="
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Yellow17/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Blue17/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
   sudo update-alternatives --remove gdm-theme.gresource /usr/share/themes/Moe-Pink17/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
-echo "Done"
+echo "完了"
 }
 
 # main
@@ -53,29 +53,29 @@ if [ ! -d $TempDir ]; then
   mkdir $TempDir
 fi
 # Install curl
-echo " Install curl"
+echo " curlのインストール"
 dpkg -s curl >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt install -y curl
   else
-      echo " Already Installed"
+      echo " すでにインストールされていました"
 fi
 
 # Install imagemagick-2212291856
-echo " Install imagemagick"
+echo " imagemagickのインストール"
 dpkg -s imagemagick >/dev/null 2>&1
 if [ ! $? -eq 0 ]; then
   sudo apt install -y imagemagick
   else
-      echo " Already Installed"
+      echo " すでにインストールされていました"
 fi
 
 # Download Theme
-echo " download $ThemeFileName"
+echo " $ThemeFileName をダウンロードします"
 curl -L $ThemeUrl --output "$TempDir/$ThemeFileName"
 
 # Unpack
-echo " unpack $ThemeFileName"
+echo " $ThemeFileName を解凍します"
 tar Jxfv "$TempDir/$ThemeFileName" -C $TempDir > /dev/null 2> /dev/null
 
 # set to themes Folder
@@ -83,72 +83,72 @@ echo " copy to system theme folder"
 cd $TempDir
 sudo cp -R $ThemeDirName /usr/share/themes/
 cd ..
-echo "Exist Moe Theme(s): `ls -d /usr/share/themes/Moe*`"
+echo "現在ある萌え(かわいい)テーマは次の通り: `ls -d /usr/share/themes/Moe*`"
 echo ""
 
 # change theme gsetting
-echo " change theme gsettings"
+echo " theme gsettings を変更します"
 gsettings set org.gnome.desktop.interface gtk-theme $ThemeName
 gsettings set org.gnome.shell.extensions.user-theme name $ThemeName
 
 # change login screen
-echo -n "Change login screen"
+echo -n "ログイン画面を変更します"
 if askyn; then
-  echo " prepair GDM and login banner setting=>"
+  echo " GDMとログインバナーの設定の用意=>"
   removethemealtanatives;
   loginlogobak;
   echo ""
   
 # set update-altanatives
-  echo " set GDM update-altanatives"
+  echo " GDM update-altanatives を設定"
   sudo update-alternatives --install /usr/share/gnome-shell/gdm-theme.gresource gdm-theme.gresource "/usr/share/themes/$ThemeDirName/gnome-shell/gnome-shell-theme.gresource" 20 >/dev/null 2>/dev/null
   sudo update-alternatives --set gdm-theme.gresource /usr/share/themes/$ThemeDirName/gnome-shell/gnome-shell-theme.gresource >/dev/null 2>/dev/null
   
 # set login banner
-  echo " set login-banner"
+  echo " ログインバナーを設定"
   sudo cp /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/ubuntu-logo.org.png
   sudo cp /usr/share/themes/$ThemeDirName/ubuntu-logo.png /usr/share/plymouth/ubuntu-logo.png
 
 # login png-file
-  echo "Set Moebuntu basic login picture(Y)"
+  echo "萌えぶんちゅの基本画像を適用しますか？(Y)"
   # sentence modified at 2212291859
-  echo -n " Or Original(or Example) login image(N)?:"
+  echo -n " それとは違いあなたのオリジナルの画像や、例としてこちらで用意しているログイン画像を適用しますか？(この場合Nを押してください)?:"
   if ! askyn; then    
-    read -p "Please drag-and-drop login png(or other)image-file or push to only return to set Example image:" FileDrop
+    read -p "png形式などのお好みの画像をファイラからドラックアンドドロップしてリターンキーを押してください。そのままリターンキーを押すと例となる画像が入ります。:" FileDrop
     if [ "$FileDrop" = "" ]; then
       # set default login picture
       # download default login picture
-      echo " download default login picture=" 
-      echo " Apply the cute image of anime-style a picture drawn by saki_12?"
+      echo " 例となる画像を設定します =" 
+      echo " saki_12さんが描いたアニメの絵を例としていれますか?"
       if ! askyn; then
         # not apply
-        echo " apply Moebuntu basic login picture"
+        echo " 萌えぶんちゅのの基本のログイン画像を適用します"
         # remove temp-dir
         rm -rf $TempDir
         echo ""
-        echo -n "Hit Any Key:"
+        echo -n "なにかキーを押してください:"
         read -r -n 1 -s answer
         echo ""     
         exit 0        
       fi
-      echo " download $TempDir/$LoginDefaultFileName"
+      echo " $TempDir/$LoginDefaultFileName をダウンロード"
       curl -L $LoginDefaultPngUrl --output "$TempDir/$LoginDefaultFileName"
 
 # set default GDM
-      echo " set login default picture to GDM-theme"
+      echo " set ログインのデフォルト画像を GDM-theme に設定します"
       sudo cp $TempDir/$LoginDefaultFileName /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
     else
 
 # FileDrop to login
       LoginFile=`echo $FileDrop | tr -d \'`
-      echo "=Set fileDrop $LoginFile to login picture="
+      echo "=ドラックアンドドロップした $LoginFile をログイン画像として設定します="
       if [ ! -e $LoginFile ]; then
-        echo "File Not exist!"
-        echo "Can not change login picture"
+        echo "ファイルが見当たりません!"
+        echo "ログイン画像を変える設定ができませんでした"
         # remove temp-dir
         rm -rf $TempDir
         echo ""
-        echo -n "Hit Any Key:"
+        echo -n "なにかキーを押してください:"
         read -r -n 1 -s answer
         echo ""     
         exit 0   
@@ -156,47 +156,47 @@ if askyn; then
       # file conversion-2212291856
       FileName=`echo $LoginFile|awk -F"/" '{print $NF}'`
       FileExtension=`echo ${FileName##*.}`
-      echo "FileExtension is $FileExtension"
+      echo "ファイルの拡張子は $FileExtension です"
       if [ $FileExtension = "png" ] || [ $FileExtension = "PNG" ]; then  
         sudo cp "$LoginFile" /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
-        echo "Done"
+        echo "完了"
         echo ""
       else
         echo " Convert $LoginFile to $TempDir/moebuntu_bg.png"
         ReturnValue=`convert "$LoginFile" $TempDir/moebuntu_bg.png`
         # echo " ReturnValue is $ReturnValue"
         if [ "$ReturnValue" != "" ]; then
-          echo "Can't convert to PNG-image"
-          echo "Can not change login picture"
+          echo "PNG画像に変換できませんでした"
+          echo "ログイン画像は変更設定できません"
           # remove temp-dir
           rm -rf $TempDir
           echo ""
-          echo -n "Hit Any Key:"
+          echo -n "なにかキーを押してください:"
           read -r -n 1 -s answer
           echo ""     
           exit 0
         fi
         sudo cp $TempDir/moebuntu_bg.png /usr/share/themes/$ThemeDirName/gnome-shell/moebuntu_bg.png
-        echo "Done"
+        echo "完了"
         echo ""
       fi
     fi
   else
-    echo "=set login to Moe-ized="
-    echo "Done"
+    echo "=ログイン画像を萌え(カワイイ)化する="
+    echo "完了"
   fi
 else  
-  echo "=Not change login picture="
-  echo "check Default(Yaru) altanetives"
+  echo "=ログイン画像を交換できませんでした="
+  echo "デフォルトのYaruにできるようにaltanetivesをチェックします"
   sudo update-alternatives --set gdm-theme.gresource /usr/share/gnome-shell/theme/Yaru/gnome-shell-theme.gresource >/dev/null 2>/dev/null
-  echo "Done"
+  echo "完了"
   removethemealtanatives;
   loginlogobak;
 fi
 # remove temp-dir
 rm -rf $TempDir
 echo ""
-echo -n "Hit Any Key:"
+echo -n "なにかキーを押してください:"
 read -r -n 1 -s answer
 echo ""
 

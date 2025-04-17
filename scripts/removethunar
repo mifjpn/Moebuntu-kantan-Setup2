@@ -1,20 +1,18 @@
 #!/bin/bash
 
-#if ! [ -e /etc/apt/preferences.d/mozillateamppa ]; then
-  echo "=Remove failer thunar ="
-  echo " remove thunar from dock as favorite"
+  echo "=ファイラーthunarを消します ="
+  echo " ドックのお気に入りからアイコンを消します"
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp |  sed -e "s/'thunar.desktop',//g"`
   gsettings set org.gnome.shell favorite-apps "$tmp"  
-  echo " Remove thunar"
-#    echo "  CAUTION!!:if remove command is waited longtime,stop this script(quit at Window-close button or ^c) and run update-manager for update all snap!!"
+  echo " 実際に消去するコマンドが動きます"
   sudo apt remove -y --purge nemo "thunar*"
   sudo apt remove -y --autoremove >/dev/null 2>/dev/null
   sudo killall thunar
   rm -rf ~/.config/Thunar
   echo ""
-  echo -n "Hit Any Key:"
+  echo -n "なにかキーを押してください:"
   read -r -n 1 -s answer
   echo ""
-#fi
+
 

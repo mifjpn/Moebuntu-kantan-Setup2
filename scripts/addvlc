@@ -1,10 +1,10 @@
 #!/bin/bash
-  echo "=Install dev vlc ="
-  echo " Install vlc"
+  echo "動画を見るソフトvlcをインストールします"
+  echo " インストールの実行"
   sudo apt update >/dev/null 2>/dev/null
   sudo apt -y install "vlc"
   echo ""
-  echo -n "Hit Any Key:"
+  echo -n "なにかキーを押してください:"
   read -r -n 1 -s answer
   echo ""
 

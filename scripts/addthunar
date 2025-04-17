@@ -1,16 +1,17 @@
 #!/bin/bash
 
 #if ! [ -e /etc/apt/preferences.d/mozillateamppa ]; then
-  echo "=Install thunar ="
-  echo " add thuner-icon to dock as favorite"
+  echo "thunarをインストールします"
+  echo "thunerのアイコンをお気に入りでドックに入れます"
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp |  sed -e "s/'org.gnome.Nautilus.desktop',/'org.gnome.Nautilus.desktop','thunar.desktop',/g"`
   gsettings set org.gnome.shell favorite-apps "$tmp"  
 #  echo " Add nemo"
-  echo " Install thunar"
+  echo "Thunarのインストール"
   sudo apt update >/dev/null 2>/dev/null
   sudo apt -y install "thunar*"
-#  echo " Install nemo to dock as favorite"
+  echo "Thunarのメニューに「実行する」を足しこみます。"
+  echo "いったんThunarが起動しますがそのままにしてください。"
   thunar&
   sleep 3
   sudo killall thunar
@@ -18,8 +19,9 @@
   cp ~/.config/Thunar/uca.xml ~/.config/Thunar/uca.xml.bak
     sed -i $'/<\/actions>/{e cat ./thunar-execute-script.txt\n}' ~/.config/Thunar/uca.xml
   fi
+  echo "終わりました"
   echo ""
-  echo -n "Hit Any Key:"
+  echo -n "なにかキーを押してください:"
   read -r -n 1 -s answer
   echo ""
 #fi

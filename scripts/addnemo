@@ -1,18 +1,18 @@
 #!/bin/bash
 
 #if ! [ -e /etc/apt/preferences.d/mozillateamppa ]; then
-  echo "=Install nemo ="
-  echo " add nemo-icon to dock as favorite"
+  echo "nemoをインストールします"
+  echo "ドックにnemoのアイコンを入れます"
   tmp=`gsettings get org.gnome.shell favorite-apps`
   tmp=`echo $tmp |  sed -e "s/'org.gnome.Nautilus.desktop',/'org.gnome.Nautilus.desktop','nemo.desktop',/g"`
   gsettings set org.gnome.shell favorite-apps "$tmp"  
 #  echo " Add nemo"
-  echo " Install nemo"
+  echo " nemoのインストール"
   sudo apt update >/dev/null 2>/dev/null
   sudo apt -y install nemo
 #  echo " Install nemo to dock as favorite"
   echo ""
-  echo -n "Hit Any Key:"
+  echo -n "なにかキーを押してください:"
   read -r -n 1 -s answer
   echo ""
 #fi

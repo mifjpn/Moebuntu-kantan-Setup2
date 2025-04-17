@@ -10,14 +10,14 @@ TempDir="Moebuntu.temp"
 
 # Install curl
 InstallCurl() {
-  echo "=Install curl="
+  echo "=curlをインストール="
   dpkg -s curl >/dev/null 2>&1
   if [ ! $? -eq 0 ]; then
     sudo apt install -y curl
-    echo "done"
+    echo "完了"
     echo ""
     else
-        echo "Already Installed"
+        echo "すでにインストールされていました。"
   fi
   echo ""
 }
@@ -25,44 +25,44 @@ InstallCurl() {
 # main
 # make temp directory
 if [ ! -d $TempDir ]; then
-  echo "=Create temp folder $TempDir="
+  echo "=一時的なフォルダ $TempDir を作成します="
   mkdir $TempDir
 fi
 
 # install or remove?
 if [ "$1" = "install" ]; then
   # install
-  echo "=Install $MoeIconFileName="
+  echo "=$MoeIconFileName をインストールします="
   InstallCurl;
-  echo " download $MoeIconFileName"
+  echo " $MoeIconFileName をダンロードします"
   curl -L $MoeIconUrl --output "$TempDir/$MoeIconFileName"
-  echo " unpack $MoeIconFileName"
+  echo " $MoeIconFileName 解凍"
   tar Jxfv "$TempDir/$MoeIconFileName" -C $TempDir > /dev/null 2> /dev/null
-  echo " copy to $SYSIconDir"
+  echo " $SYSIconDir へコピー"
   sudo cp -R "$TempDir/$MoeIconDirName" "$SYSIconDir"
-  echo " exsist Moe*:`ls -d /usr/share/icons/Moe*`"
-  echo " setting to $MoeIconName"
+  echo " 今、存在している Moe*は次の通り:`ls -d /usr/share/icons/Moe*`"
+  echo " $MoeIconName をセット中"
   gsettings set org.gnome.desktop.interface icon-theme "$MoeIconName"
-  echo "Done"
+  echo "完了"
   # remove
   elif [ "$1" = "remove" ]; then
-    echo "=Remove $MoeIconFileName and set detault="
+    echo "=$MoeIconFileName を消して、元の状態に戻します"
     echo " seting to $DefaultIconName"
     gsettings set org.gnome.desktop.interface icon-theme "$DefaultIconName"
     # if exsist remove MoeBuntuIcon
     if [ -d "$SYSIconDir/$MoeIconDirName" ]; then
-      echo " Remove $SYSIconDir/$MoeIconDirName"
+      echo " $SYSIconDir/$MoeIconDirName を消します"
       sudo rm -rf "$SYSIconDir/$MoeIconDirName"
     fi
-    echo "Done"
+    echo "完了"
     echo ""
   else
-    echo "install? remove?"
+    echo "入れるの? 消すの?"
 fi
 
-echo "=Delete temp folder $TempDir="
+echo "=一時的に使用した $TempDir を消します="
 rm -rf $TempDir
 
 echo ""
-echo -n "Hit Any Key:"
+echo -n "なにかキーを押してください:"
 read -r -n 1 -s answer
