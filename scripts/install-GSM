@@ -5,7 +5,7 @@ extman(){
     echo "2.「User-theme」の横のインストールを押して、インストールを進めてください。"
     echo "3.「インストール済み」のタブへ戻ったら、「User-theme」を有効にしてください。実際にはスイッチを右へスライドしてあげればよいです。"
     echo " 「GNOME Shell拡張機能を使う」もスイッチをオンにして有効にします。実際にはスイッチを右にスライドしてあげれば大乗です"
-    echo "4.「User Themes」のスイッチがON担っているか再確認"
+    echo "4.「User Themes」のスイッチがONになっているか再確認"
     echo "5.このウインドウを閉じます"
 extension-manager 2> /dev/null
 }

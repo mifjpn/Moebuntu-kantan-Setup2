@@ -7,7 +7,7 @@ sudo rm -rf /usr/share/sounds/Moe*
 # change sound gsetting
 echo " gsettingsをYaruデフォルトに戻します"
 gsettings set org.gnome.desktop.sound theme-name "Yaru"
-echo "Done"
+echo "完了"
 #
 echo ""
 echo -n "なにかキーを押してください:"

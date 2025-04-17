@@ -46,7 +46,7 @@ options=( '基本の設定(最初にする)'
           'テーマ削除'
           'かわいいアイコンセット'
           'アイコンもとに戻す'
-          '起動待ち画面を可愛く設定'
+          '起動待ち画面をかわいく設定'
           '起動待ち画面を戻す'
           'デスクトップの背景を変える'
           'デスクトップの背景をもとに戻す'
@@ -120,7 +120,7 @@ do
       /bin/bash iconmanager remove ;
       break
     ;;
-    "起動待ち画面を可愛く設定")
+    "起動待ち画面をかわいく設定")
       /bin/bash set-plymouth ;
       break
     ;;
@@ -156,7 +156,7 @@ do
       /bin/bash addthunar;
       break
     ;;
-    "ファイラーthunarをやめる")
+    "ファイラーthunarやめる")
       /bin/bash removethunar ;
       break
     ;;

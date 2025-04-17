@@ -12,7 +12,7 @@
   #snap list contain firefox?
   if snap list | grep -q -n firefox; then
     echo " snap版のfirefoxを取り除きます"
-    echo "  注意!!:もし消しているコマンドの状態が長く続きすぎた場合は、ハングアップしていることがあるので、Ctrl-Cでこのウインドウを閉じでアップデートをしてすべてのSnapをアプデートしてください!!"
+    echo "  注意!!:もし消しているコマンドの状態が長く続きすぎた場合は、ハングアップしていることがあるので、Ctrl-Cでこのウインドウを閉じでアップデートをしてすべてのSnapをアップデートしてください!!"
     sudo snap remove --purge firefox
     sudo apt remove -y --autoremove firefox >/dev/null 2>/dev/null
   fi
