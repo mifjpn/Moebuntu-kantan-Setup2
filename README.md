@@ -5,6 +5,7 @@
 
 最新版のスクリプトやリリースは、以下のリンクからご確認ください。
 👉 **[Kawaiintu Go to setup script repository](https://github.com/mifjpn/Kawaiintu-yet-another-moebuntu-SetupScript/releases/tag/v1.0.0)**
+
 👉 **[Kawaiintu セットアップスクリプトのリポジトリへ移動する](https://github.com/mifjpn/Kawaiintu-kantan-script-for-Ubuntu26.04/releases/tag/v1.0.0)**
 
 ---
